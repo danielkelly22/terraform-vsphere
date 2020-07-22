@@ -103,9 +103,15 @@ resource "vsphere_virtual_machine" "vm_db_01" {
             #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
   }
   disk {      
-      label     = "${var.vm_name_DB}${format("%02d", count.index+01)}.vmdk"
+      label     = "${var.vm_name_DB}${format("%02d", count.index+00)}.vmdk"
       size      = data.vsphere_virtual_machine.db_template.disks.0.size      
       thin_provisioned = data.vsphere_virtual_machine.db_template.disks.0.thin_provisioned
+  }
+  
+  disk {      
+      label     = "${var.vm_name_DB_rep}${format("%02d", count.index+01)}.vmdk"
+      size      = data.vsphere_virtual_machine.db_template.disks.1.size      
+      thin_provisioned = data.vsphere_virtual_machine.template.disks.1.thin_provisioned
   }
   
   clone {
@@ -120,7 +126,7 @@ resource "vsphere_virtual_machine" "vm_db_01" {
             admin_password        = var.local_admin_password
         }
         network_interface {
-            ipv4_address = "${var.vm_db_dev_ip_address}.${24 + count.index}"
+            ipv4_address = "${var.vm_db_dev_ip_address}.${27 + count.index}"
             ipv4_netmask = "24"
             dns_server_list = var.virtual_machine_dns_servers          
         }
@@ -151,7 +157,7 @@ resource "vsphere_virtual_machine" "vm_db_rep_01" {
             #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
   }
   disk {      
-      label     = "${var.vm_name_DB_rep}${format("%02d", count.index+01)}.vmdk"
+      label     = "${var.vm_name_DB_rep}${format("%02d", count.index+00)}.vmdk"
       size      = data.vsphere_virtual_machine.db_template.disks.0.size      
       thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
   }
@@ -168,7 +174,7 @@ resource "vsphere_virtual_machine" "vm_db_rep_01" {
             admin_password        = var.local_admin_password
         }
         network_interface {
-            ipv4_address = "${var.vm_db_dev_ip_address}.${24 + count.index}"
+            ipv4_address = "${var.vm_db_dev_ip_address}.${28 + count.index}"
             ipv4_netmask = "24"
             dns_server_list = var.virtual_machine_dns_servers          
         }
