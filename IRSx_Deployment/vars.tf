@@ -1,5 +1,4 @@
 variable "vsphere_user" {}
-variable "vsphere_user" {}
 variable "local_admin_user" {}
 variable "local_admin_password" {}
 variable "windows_admin_password" {}
