@@ -18,11 +18,6 @@ variable "vm_name_DB_rep" {
   default = "LD9DEVDBREP"
 }
 
-variable "vm_ip_address" {
-  description = "IP Address of the VM(s)"
-  default = "10.95.8"
-}
-
 variable "vm_annotation" {
   description = "Annotation to add to the VM(s)"
   default =  "Contact: Joseph Valdez \n Description: IRSx DEV Server \n Ticket: SCTASK0215776 \n Created By: built via Ansible/Terraform \n Created On: 07/28/2020"
