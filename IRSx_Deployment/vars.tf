@@ -1,7 +1,39 @@
 variable "vsphere_user" {}
+variable "vsphere_user" {}
+variable "local_admin_user" {}
+variable "local_admin_password" {}
+variable "windows_admin_password" {}
+variable "windows_admin_account" {}
+variable "vsphere_datacenter" {}
+variable "vsphere_web_vm_folder" {}
+variable "vsphere_db_vm_folder" {}
+variable "vsphere_app_vm_folder" {}
+variable "vsphere_db_compute_cluster" {}
+variable "vsphere_dev_db_compute_cluster" {}
+variable "vsphere_compute_cluster" {}
+variable "vsphere_datastore_cluster" {}
+variable "vsphere_web_dev_network" {}
+variable "vsphere_db_dev_network" {}
+variable "vsphere_app_dev_network" {}
+variable "vsphere_web_prod_network" {}
+variable "vsphere_db_prod_network" {}
+variable "vsphere_app_prod_network" {}
+variable "vsphere_db_machine_template" {}
+variable "vsphere_machine_template" {}
+variable "vm_web_dev_ip_address" {}
+variable "vm_db_dev_ip_address" {}
+variable "vm_app_dev_ip_address" {}
+variable "vm_web_prod_ip_address" {}
+variable "vm_db_prod_ip_address" {}
+variable "vm_app_prod_ip_address" {}
+variable "domain_name" {}
 
 variable "vsphere_admin_password" {
-  type  = "string"
+  type  = string
+}
+
+variable "virtual_machine_dns_server" {
+   type    = list(string)
 }
 
 variable "vm_name_WEB" {
