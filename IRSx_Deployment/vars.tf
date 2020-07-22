@@ -1,16 +1,21 @@
-variable "vsphere_machine_template" {
-  description = "template used for creating the vm(s)"
-  default = "Templates LD9/Server 2019/ld9_winsrv2019_dc_CLEANBASE"
-}
-
 variable "vm_name_WEB" {
   description = "Name for the VM(s)"
-  default = "LD9QAWEBVSC"
+  default = "LD9DWEBVIRS"
 }
 
 variable "vm_name_APP" {
   description = "Name for the VM(s)"
-  default = "LD9QAAPPVSC"
+  default = "LD9DAAPPIRS"
+}
+
+variable "vm_name_DB" {
+  description = "Name for the VM(s)"
+  default = "LD9DEVDBSTG"
+}
+
+variable "vm_name_DB_rep" {
+  description = "Name for the VM(s)"
+  default = "LD9DEVDBREP"
 }
 
 variable "vm_ip_address" {
@@ -20,20 +25,25 @@ variable "vm_ip_address" {
 
 variable "vm_annotation" {
   description = "Annotation to add to the VM(s)"
-  default =  "Contact: Joseph Valdez \n Description: VSC QA  \n Ticket: SCTASK0215776 \n Created By: built via Ansible/Terraform \n Created On: 5/14/2020"
+  default =  "Contact: Joseph Valdez \n Description: IRSx DEV Server \n Ticket: SCTASK0215776 \n Created By: built via Ansible/Terraform \n Created On: 07/28/2020"
 }
 
-variable "vm_count_WEB" {
+variable "vm_count_dev_WEB" {
   description = "Number of VMs to build"
   default = "1"
 }
 
-variable "vm_count_APP" {
+variable "vm_count_dev_APP" {
   description = "Number of VMs to build"
   default = "1"
 }
 
-variable "vm_count_DB" {
+variable "vm_count_dev_DB" {
+  description = "Number of VMs to build"
+  default = "1"
+}
+
+variable "vm_count_dev_DB_rep" {
   description = "Number of VMs to build"
   default = "1"
 }
