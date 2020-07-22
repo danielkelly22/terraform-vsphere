@@ -1,3 +1,9 @@
+variable "vsphere_user" {}
+
+variable "vsphere_admin_password" {
+  type  = "string"
+}
+
 variable "vm_name_WEB" {
   description = "Name for the VM(s)"
   default = "LD9DWEBVIRS"
