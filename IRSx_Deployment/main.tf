@@ -103,17 +103,11 @@ resource "vsphere_virtual_machine" "vm_db_01" {
             #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
   }
   disk {      
-      label     = "${var.vm_name_DB}${format("%02d", count.index+00)}.vmdk"
+      label     = "${var.vm_name_DB}_disk0.vmdk"
       size      = data.vsphere_virtual_machine.db_template.disks.0.size      
       thin_provisioned = data.vsphere_virtual_machine.db_template.disks.0.thin_provisioned
   }
-  
-  disk {      
-      label     = "${var.vm_name_DB_rep}${format("%02d", count.index+01)}.vmdk"
-      size      = data.vsphere_virtual_machine.db_template.disks.1.size      
-      thin_provisioned = data.vsphere_virtual_machine.template.disks.1.thin_provisioned
-  }
-  
+   
   clone {
       template_uuid = data.vsphere_virtual_machine.db_template.id
       timeout = "600"
@@ -157,7 +151,7 @@ resource "vsphere_virtual_machine" "vm_db_rep_01" {
             #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
   }
   disk {      
-      label     = "${var.vm_name_DB_rep}${format("%02d", count.index+00)}.vmdk"
+      label     = "${var.vm_name_DB}_disk0.vmdk"
       size      = data.vsphere_virtual_machine.db_template.disks.0.size      
       thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
   }
