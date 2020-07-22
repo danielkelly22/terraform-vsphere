@@ -99,7 +99,7 @@ resource "vsphere_virtual_machine" "vm_db_01" {
   efi_secure_boot_enabled  = true
   nested_hv_enabled        = true
   network_interface {
-            network_id    = data.vsphere_network.network.id
+            network_id    = data.vsphere_network.db_dev_network.id
             #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
   }
   disk {      
@@ -147,7 +147,7 @@ resource "vsphere_virtual_machine" "vm_db_rep_01" {
   efi_secure_boot_enabled  = true
   nested_hv_enabled        = true
   network_interface {
-            network_id    = data.vsphere_network.network.id
+            network_id    = data.vsphere_network.db_dev_network.id
             #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
   }
   disk {      
