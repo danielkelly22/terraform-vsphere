@@ -1,3 +1,4 @@
+variable "vsphere_server" {}
 variable "vsphere_user" {}
 variable "local_admin_user" {}
 variable "local_admin_password" {}
