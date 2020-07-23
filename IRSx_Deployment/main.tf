@@ -12,6 +12,7 @@ terraform {
 
 provider "vsphere" {
   version        = "1.21.1"
+  vim_keep_alive = 120
   user           = var.vsphere_user
   password       = var.vsphere_admin_password
   vsphere_server = var.vsphere_server
