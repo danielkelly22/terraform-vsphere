@@ -14,6 +14,7 @@ provider "vsphere" {
   user           = var.vsphere_user
   password       = var.vsphere_admin_password
   vsphere_server = var.vsphere_server
+  persist_session = true
 
   # If you have a self-signed cert
   allow_unverified_ssl = true
@@ -107,7 +108,7 @@ resource "vsphere_virtual_machine" "vm_db_01" {
       size      = data.vsphere_virtual_machine.db_template.disks.0.size      
       thin_provisioned = data.vsphere_virtual_machine.db_template.disks.0.thin_provisioned
   }
-   
+
   clone {
       template_uuid = data.vsphere_virtual_machine.db_template.id
       timeout = "600"
