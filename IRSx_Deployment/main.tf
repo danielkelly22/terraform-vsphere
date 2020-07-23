@@ -11,6 +11,7 @@ terraform {
 }
 
 provider "vsphere" {
+  version        = "1.21.1"
   user           = var.vsphere_user
   password       = var.vsphere_admin_password
   vsphere_server = var.vsphere_server
