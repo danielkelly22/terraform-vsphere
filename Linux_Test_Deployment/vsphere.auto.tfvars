@@ -1,7 +1,4 @@
-resource "tfe_variable" "vsphere_server" {
-  key          = "vsphere_server"
-  value        = "clepvcsa01.amtrustservices.com"
-  category     = "terraform"
+variable "vsphere_server" {
   description  = "Cleveland Vsphere Server"
+  value        = "clepvcsa01.amtrustservices.com"
 }
-
