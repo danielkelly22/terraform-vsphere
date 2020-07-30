@@ -1,4 +1,4 @@
 variable "vsphere_server" {
-  type = String
+  type = "string"
   description = "Cleveland Vsphere Server"
 }
