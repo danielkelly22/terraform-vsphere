@@ -14,7 +14,7 @@ provider "vsphere" {
   version        = "1.16.2"
   vim_keep_alive = 240
   user           = var.vsphere_user
-  password       = var.vsphere_admin_password
+  password       = var.vsphere_user_password
   vsphere_server = var.vsphere_server
   persist_session = true
 
