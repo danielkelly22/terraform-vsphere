@@ -17,7 +17,7 @@ variable "virtual_machine_dns_servers" {
    type    = list(string)
 }
 
-variable "vm_name_Linux_Test" {
+variable "vm_name_linux_test" {
   description = "Name for the VM(s)"
   default = "cledtftest"
 }
@@ -27,7 +27,7 @@ variable "vm_annotation_1" {
   default =  "Contact: Stephen Zuk \n Description: Terraform Test Server \n Ticket: N/A \n Created By: built via Terraform \n Created On: 07/31/2020"
 }
 
-variable "vm_count_dev_Linux_Test" {
+variable "vm_count_dev_linux_test" {
   description = "Number of VMs to build"
   default = "1"
 }

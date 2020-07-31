@@ -49,8 +49,8 @@ data "vsphere_virtual_machine" "centos_template" {
 
 resource "vsphere_virtual_machine" "linux_test" {
   wait_for_guest_net_timeout = "15"
-  count                    = var.vm_count_dev_Linux_Test
-  name                     = "${var.vm_name_Linux_Test}${format("%02d", count.index+01)}"
+  count                    = var.vm_count_dev_linux_test
+  name                     = "${var.vm_name_linux_test}${format("%02d", count.index+01)}"
   resource_pool_id         = data.vsphere_compute_cluster.linux_compute_cluster.resource_pool_id
   datastore_cluster_id     = data.vsphere_datastore_cluster.linux_datastore_cluster.id   
   folder                   = var.vsphere_linux_vm_folder 
@@ -67,7 +67,7 @@ resource "vsphere_virtual_machine" "linux_test" {
             #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
   }
   disk {      
-      label     = "${var.vm_name_DB}_disk0.vmdk"
+      label     = "${var.vm_name_linux_test}_disk0.vmdk"
       size      = data.vsphere_virtual_machine.centos_template.disks.0.size      
       thin_provisioned = data.vsphere_virtual_machine.centos_template.disks.0.thin_provisioned
   }
