@@ -83,7 +83,7 @@ resource "vsphere_virtual_machine" "linux_test" {
         }
         ipv4_gateway = "${var.vm_app_dev_ip_address}.1"
         dns_server_list = var.virtual_machine_dns_servers
-        dns_suffix_list = amtrustservices.com
+        dns_suffix_list = "amtrustservices.com"
         timeout = "600"       
       }
   }          
