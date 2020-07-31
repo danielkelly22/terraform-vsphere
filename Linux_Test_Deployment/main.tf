@@ -90,7 +90,7 @@ resource "vsphere_virtual_machine" "linux_test" {
 #Install PIP, WinRM and Ansible
   provisioner "remote-exec" {
     inline = [
-      "yum install python3 -y"
+      "yum install python3 -y",
       "python3 -m pip install --upgrade --force-reinstall pip",
       "pip3 install pyvmomi",
       "python3 -m pip install --upgrade pip",
