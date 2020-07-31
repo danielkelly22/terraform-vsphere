@@ -17,6 +17,11 @@ variable "centos_root_password" {
   type  = string
 }
 
+variable "centos_root_user" {
+  type = string
+  default = "root"
+}
+
 variable "virtual_machine_dns_servers" {
    type    = list(string)
 }

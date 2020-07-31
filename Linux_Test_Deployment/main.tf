@@ -98,9 +98,9 @@ resource "vsphere_virtual_machine" "linux_test" {
       "ansible --version",
     ]
     connection {
-      host     = "${var.vm_app_dev_ip_address}.${167 + count.index}"
+      host     = self.default_ip_address
       type     = "ssh"
-      user     = "root"
+      user     = var.centos_root_user
       password = var.centos_root_password
     }
   }
