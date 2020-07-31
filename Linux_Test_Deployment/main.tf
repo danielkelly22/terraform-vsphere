@@ -77,7 +77,7 @@ resource "vsphere_virtual_machine" "linux_test" {
       timeout = "600"
       customize {
         linux_options {
-          hostname = "tf-linux-test01"
+          host_name = "tf-linux-test01"
           domain = "amtrustservices.com"
         }
         network_interface {
