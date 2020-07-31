@@ -79,12 +79,29 @@ resource "vsphere_virtual_machine" "linux_test" {
         }
         network_interface {
             ipv4_address = "${var.vm_app_dev_ip_address}.${167 + count.index}"
-            ipv4_netmask = "24"
-            dns_server_list = var.virtual_machine_dns_servers          
+            ipv4_netmask = "24"        
         }
-        ipv4_gateway = "${var.vm_app_dev_ip_address}.1" 
+        ipv4_gateway = "${var.vm_app_dev_ip_address}.1"
+        dns_server_list = var.virtual_machine_dns_servers
+        dns_suffix_list = amtrustservices.com
         timeout = "600"       
       }
   }          
+#Install PIP, WinRM and Ansible
+  provisioner "remote-exec" {
+    inline = [
+      "python3 -m pip install --upgrade --force-reinstall pip",
+      "pip3 install pyvmomi",
+      "python3 -m pip install --upgrade pip",
+      "pip3 install ansible",
+      "ansible --version",
+    ]
+    connection {
+      host     = self.default_ip_address
+      type     = "ssh"
+      user     = "root"
+      password = var.centos_root_password
+    }
+  }
 
 }
