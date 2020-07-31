@@ -63,17 +63,17 @@ resource "vsphere_virtual_machine" "linux_test" {
   efi_secure_boot_enabled  = true
   nested_hv_enabled        = true
   network_interface {
-            network_id    = data.vsphere_network.vsphere_app_dev_network.id
+            network_id    = data.vsphere_network.app_dev_network.id
             #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
   }
   disk {      
       label     = "${var.vm_name_DB}_disk0.vmdk"
-      size      = data.vsphere_virtual_machine.db_template.disks.0.size      
-      thin_provisioned = data.vsphere_virtual_machine.db_template.disks.0.thin_provisioned
+      size      = data.vsphere_virtual_machine.centos_template.disks.0.size      
+      thin_provisioned = data.vsphere_virtual_machine.centos_template.disks.0.thin_provisioned
   }
 
   clone {
-      template_uuid = data.vsphere_virtual_machine.db_template.id
+      template_uuid = data.vsphere_virtual_machine.centos_template.id
       timeout = "600"
       customize {
         linux_options {
