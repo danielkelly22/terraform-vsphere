@@ -1,17 +1,15 @@
 variable "vsphere_server" {}
 variable "vsphere_user" {}
-variable "vsphere_admin_password" {}
 variable "vsphere_datacenter" {}
 variable "vsphere_linux_vm_folder" {}
 variable "vsphere_linux_compute_cluster" {}
 variable "vsphere_linux_datastore_cluster" {}
 variable "vsphere_app_dev_network" {}
 variable "vsphere_linux_machine_template" {}
-variable "vsphere_linux_machine_template" {}
 variable "vm_app_dev_ip_address" {}
 variable "domain_name" {}
 
-variable "vsphere_admin_password" {
+variable "vsphere_user_password" {
   type  = string
 }
 
