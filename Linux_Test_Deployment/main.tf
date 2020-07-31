@@ -59,9 +59,6 @@ resource "vsphere_virtual_machine" "linux_test" {
   scsi_type                = data.vsphere_virtual_machine.centos_template.scsi_type
   num_cpus                 = 2
   memory                   = 2048
-  firmware                 = "efi"
-  efi_secure_boot_enabled  = true
-  nested_hv_enabled        = true
   network_interface {
             network_id    = data.vsphere_network.app_dev_network.id
             #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
