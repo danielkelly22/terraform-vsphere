@@ -74,7 +74,7 @@ resource "vsphere_virtual_machine" "linux_test" {
       timeout = "600"
       customize {
         linux_options {
-          host_name = "tf-linux-test01"
+          host_name = "${var.vm_name_linux_test}${format("%02d", count.index+01)}"
           domain = "amtrustservices.com"
         }
         network_interface {
@@ -90,6 +90,7 @@ resource "vsphere_virtual_machine" "linux_test" {
 #Install PIP, WinRM and Ansible
   provisioner "remote-exec" {
     inline = [
+      "yum install python3 -y"
       "python3 -m pip install --upgrade --force-reinstall pip",
       "pip3 install pyvmomi",
       "python3 -m pip install --upgrade pip",

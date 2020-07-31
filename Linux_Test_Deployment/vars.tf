@@ -23,7 +23,7 @@ variable "virtual_machine_dns_servers" {
 
 variable "vm_name_linux_test" {
   description = "Name for the VM(s)"
-  default = "cledtftest"
+  default = "clednixtftest"
 }
 
 variable "vm_annotation_1" {
