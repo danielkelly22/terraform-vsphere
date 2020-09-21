@@ -88,7 +88,7 @@ resource "vsphere_virtual_machine" "vm_SSAS_01" {
             admin_password        = var.local_admin_password
         }
         network_interface {
-            ipv4_address = "${var.vm_SSAS_dev_ip_address}.${27 + count.index}"
+            ipv4_address = "${var.vm_SSAS_dev_ip_address}.${30 + count.index}"
             ipv4_netmask = "24"
             dns_server_list = var.virtual_machine_dns_servers          
         }
@@ -136,7 +136,7 @@ resource "vsphere_virtual_machine" "vm_SSIS_01" {
             admin_password        = var.local_admin_password
         }
         network_interface {
-            ipv4_address = "${var.vm_SSIS_dev_ip_address}.${28 + count.index}"
+            ipv4_address = "${var.vm_SSIS_dev_ip_address}.${31 + count.index}"
             ipv4_netmask = "24"
             dns_server_list = var.virtual_machine_dns_servers          
         }
