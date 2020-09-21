@@ -121,7 +121,7 @@ resource "vsphere_virtual_machine" "vm_SSIS_01" {
   disk {      
       label     = "${var.vm_SSIS_01}_disk0.vmdk"
       size      = data.vsphere_virtual_machine.db_template.disks.0.size      
-      thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
+      thin_provisioned = data.vsphere_virtual_machine.db_template.disks.0.thin_provisioned
   }
   
   clone {
