@@ -11,7 +11,7 @@ variable "vsphere_compute_cluster" {}
 variable "vsphere_datastore_cluster" {}
 variable "vsphere_SSAS_dev_network" {}
 variable "vsphere_SSIS_dev_network" {}
-variable "vsphere_machine_template" {}
+variable "vsphere_db_machine_template" {}
 variable "vm_SSAS_dev_ip_address" {}
 variable "vm_SSIS_dev_ip_address" {}
 variable "domain_name" {}
