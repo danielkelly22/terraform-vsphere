@@ -37,12 +37,12 @@ data  "vsphere_compute_cluster" "compute_cluster" {
 }
 
 data "vsphere_network" "SSAS_network" {
-  name          = var.vsphere_SSAS_network
+  name          = var.vsphere_SSAS_dev_network
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
 data "vsphere_network" "SSIS_network" {
-  name          = var.vsphere_SSIS_network
+  name          = var.vsphere_SSIS_dev_network
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
@@ -55,7 +55,7 @@ resource "vsphere_virtual_machine" "vm_SSAS_01" {
   wait_for_guest_net_timeout = "15"
   count                    = var.vm_count_dev_SSAS
   name                     = "${var.vm_name_SSAS}${format("%02d", count.index+01)}"
-  resource_pool_id         = data.vsphere_compute_cluster.dev_db_cluster.resource_pool_id
+  resource_pool_id         = data.vsphere_compute_cluster.compute_cluster.resource_pool_id
   datastore_cluster_id    = data.vsphere_datastore_cluster.datastore_cluster.id   
   folder                   = var.vsphere_SSAS_vm_folder 
   annotation		           = var.vm_annotation
@@ -67,7 +67,7 @@ resource "vsphere_virtual_machine" "vm_SSAS_01" {
   efi_secure_boot_enabled  = true
   nested_hv_enabled        = true
   network_interface {
-            network_id    = data.vsphere_network.db_dev_network.id
+            network_id    = data.vsphere_network.SSAS_network.id
             #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
   }
   disk {      
@@ -103,7 +103,7 @@ resource "vsphere_virtual_machine" "vm_SSIS_01" {
   wait_for_guest_net_timeout = "15"
   count                    = var.vm_count_dev_SSIS
   name                     = "${var.vm_SSIS_01}${format("%02d", count.index+01)}"
-  resource_pool_id         = data.vsphere_compute_cluster.dev_db_cluster.resource_pool_id
+  resource_pool_id         = data.vsphere_compute_cluster.compute_cluster.resource_pool_id
   datastore_cluster_id    = data.vsphere_datastore_cluster.datastore_cluster.id   
   folder                   = var.vsphere_SSIS_vm_folder
   annotation		           = var.vm_annotation
@@ -115,7 +115,7 @@ resource "vsphere_virtual_machine" "vm_SSIS_01" {
   efi_secure_boot_enabled  = true
   nested_hv_enabled        = true
   network_interface {
-            network_id    = data.vsphere_network.db_dev_network.id
+            network_id    = data.vsphere_network.SSIS_network.id
             #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
   }
   disk {      
