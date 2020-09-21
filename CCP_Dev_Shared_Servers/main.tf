@@ -102,7 +102,7 @@ resource "vsphere_virtual_machine" "vm_SSAS_01" {
 resource "vsphere_virtual_machine" "vm_SSIS_01" {
   wait_for_guest_net_timeout = "15"
   count                    = var.vm_count_dev_SSIS
-  name                     = "${var.vm_SSIS_01}${format("%02d", count.index+01)}"
+  name                     = "${var.vm_name_SSIS}${format("%02d", count.index+01)}"
   resource_pool_id         = data.vsphere_compute_cluster.compute_cluster.resource_pool_id
   datastore_cluster_id    = data.vsphere_datastore_cluster.datastore_cluster.id   
   folder                   = var.vsphere_SSIS_vm_folder
@@ -119,7 +119,7 @@ resource "vsphere_virtual_machine" "vm_SSIS_01" {
             #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
   }
   disk {      
-      label     = "${var.vm_SSIS_01}_disk0.vmdk"
+      label     = "${var.vm_name_SSIS}_disk0.vmdk"
       size      = data.vsphere_virtual_machine.db_template.disks.0.size      
       thin_provisioned = data.vsphere_virtual_machine.db_template.disks.0.thin_provisioned
   }
@@ -129,7 +129,7 @@ resource "vsphere_virtual_machine" "vm_SSIS_01" {
       timeout = "600"
       customize {
         windows_options {
-            computer_name         = "${var.vm_SSIS_01}${format("%02d", count.index+01)}"
+            computer_name         = "${var.vm_name_SSIS}${format("%02d", count.index+01)}"
             join_domain           = var.domain_name
             domain_admin_user     = var.windows_admin_account
             domain_admin_password = var.windows_admin_password
