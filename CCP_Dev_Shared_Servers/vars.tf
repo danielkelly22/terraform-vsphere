@@ -26,7 +26,7 @@ variable "virtual_machine_dns_servers" {
 
 variable "vm_name_SSAS" {
   description = "Name for the VM(s)"
-  default = "LD9DEVCCPSSAS01"
+  default = "LD9DEVCCPSSAS"
 }
 
 variable "vm_name_SSIS" {
