@@ -1,22 +1,7 @@
-terraform {
-  required_version = ">= 0.12"
-  backend "remote" {
-    hostname     = "tfe.amtrustgroup.com"
-    organization = "AmTrust-vSphere"
-
-    workspaces {
-      name = "LD9_nextcloud"
-    }
-  }
-}
-
 provider "vsphere" {
-  version        = "1.16.2"
-  vim_keep_alive = 240
   user           = var.vsphere_user
-  password       = var.vsphere_user_password
+  password       = var.vsphere_admin_password
   vsphere_server = var.vsphere_server
-  persist_session = true
 
   # If you have a self-signed cert
   allow_unverified_ssl = true
@@ -26,83 +11,106 @@ data "vsphere_datacenter" "dc" {
   name = var.vsphere_datacenter
 }
 
-data "vsphere_datastore_cluster" "linux_datastore_cluster" {
+data "vsphere_datastore_cluster" "datastore" {
   name          = var.vsphere_linux_datastore_cluster
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-data  "vsphere_compute_cluster" "linux_compute_cluster" {
+data  "vsphere_compute_cluster" "cluster" {
   name            = var.vsphere_linux_compute_cluster
   datacenter_id   = data.vsphere_datacenter.dc.id 
 }
 
-data "vsphere_network" "app_dev_network" {
-  name          = var.vsphere_app_dev_network
+data "vsphere_network" "network" {
+  name          = var.vsphere_ld9_dmz_web_app_network
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-data "vsphere_virtual_machine" "centos_template" {
+data "vsphere_virtual_machine" "template" {
   name             = var.vsphere_linux_machine_template
   datacenter_id    = data.vsphere_datacenter.dc.id
 }
 
-
-resource "vsphere_virtual_machine" "linux_test" {
+resource "vsphere_virtual_machine" "ld9_prod_nextcloud" {
   wait_for_guest_net_timeout = "15"
-  count                    = var.vm_count_dev_linux_test
+  count                    = var.vm_count_nextcloud
   name                     = "${var.vm_name_linux_test}${format("%02d", count.index+01)}"
-  resource_pool_id         = data.vsphere_compute_cluster.linux_compute_cluster.resource_pool_id
-  datastore_cluster_id     = data.vsphere_datastore_cluster.linux_datastore_cluster.id   
-  folder                   = var.vsphere_linux_vm_folder 
-  annotation		           = var.vm_annotation_1
-  guest_id                 = data.vsphere_virtual_machine.centos_template.guest_id
-  scsi_type                = data.vsphere_virtual_machine.centos_template.scsi_type
-  num_cpus                 = 2
-  memory                   = 2048
+  resource_pool_id         = data.vsphere_compute_cluster.cluster.resource_pool_id
+  datastore_cluster_id     = data.vsphere_datastore_cluster.datastore.id 
+  folder                   = var.vsphere_vm_folder 
+  annotation		           = var.vm_annotation
+  guest_id                 = data.vsphere_virtual_machine.template.guest_id
+  scsi_type                = data.vsphere_virtual_machine.template.scsi_type
+  num_cpus                 = 4
+  memory                   = 16384
   network_interface {
-            network_id    = data.vsphere_network.app_dev_network.id
-            #adapter_type  = "${data.vsphere_virtual_machine.template.network_interface_type[0]}"     
+            network_id    = data.vsphere_network.network.id
+            #adapter_type  = data.vsphere_virtual_machine.template.network_interface_type[0]
   }
   disk {      
-      label     = "${var.vm_name_linux_test}_disk0.vmdk"
-      size      = data.vsphere_virtual_machine.centos_template.disks.0.size      
-      thin_provisioned = data.vsphere_virtual_machine.centos_template.disks.0.thin_provisioned
+    label            = "${var.vm_name_01}disk01.vmdk"
+    size             = data.vsphere_virtual_machine.template.disks.0.size    
+    thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
   }
-
+  disk {      
+    label 	         = "${var.vm_name_01}_disk02.vmdk"
+    size             = "400"   
+    unit             = 1
+    thin_provisioned = true
+  }
+  
   clone {
-      template_uuid = data.vsphere_virtual_machine.centos_template.id
+      template_uuid = data.vsphere_virtual_machine.template.id
       timeout = "600"
       customize {
         linux_options {
-          host_name = "${var.vm_name_linux_test}${format("%02d", count.index+01)}"
+          host_name = "${var.vm_name_01}${format("%02d", count.index+01)}"
           domain = "amtrustservices.com"
         }
         network_interface {
-            ipv4_address = "${var.vm_app_dev_ip_address}.${167 + count.index}"
-            ipv4_netmask = "24"        
+            ipv4_address = "10.94.8.106"
+            ipv4_netmask = "22"        
         }
-        ipv4_gateway = "${var.vm_app_dev_ip_address}.1"
+        ipv4_gateway = "10.94.8.1"
         dns_server_list = var.virtual_machine_dns_servers
         dns_suffix_list = ["amtrustservices.com", "serv.infr.it.amtrustna.com"]
         timeout = "600"       
       }
   }          
-#Install PIP, WinRM and Ansible
-  provisioner "remote-exec" {
-    inline = [
-      "yum install python3 -y",
-      "python3 -m pip install --upgrade --force-reinstall pip",
-      "pip3 install pyvmomi",
-      "python3 -m pip install --upgrade pip",
-      "pip3 install ansible",
-      "ansible --version",
-    ]
-    connection {
-      host     = self.default_ip_address
-      type     = "ssh"
-      user     = var.centos_root_user
-      password = var.centos_root_password
-    }
-  }
 
 }
+
+# resource "null_resource" "vsphere_apache_setup" {
+#   count                    = var.vm_count
+#   triggers = {
+#     policy_sha1 = "${sha1(file("./files/install_apache.sh"))}"
+#   }
+#   provisioner "file" {
+#     source = "./files/install_apache.sh"
+#     destination = "/tmp/install_apache.sh"
+
+#     connection {
+#     host     = vsphere_virtual_machine.vm_01[count.index].default_ip_address
+#     type     = "ssh"
+#     user     = var.vsphere_linux_username
+#     timeout  = "10m"
+#     password = var.vsphere_linux_password
+#     }       
+#   }
+#   provisioner "remote-exec" {
+#     script = "./files/install_apache.sh"
+#     connection {
+#     host        = vsphere_virtual_machine.vm_01[count.index].default_ip_address
+#     user        = var.vsphere_linux_username
+#     type        = "ssh"
+#     timeout     = "10m"
+#     password    = var.vsphere_linux_password
+#     script_path = "/root/install_apache.sh"
+#     } 
+#   }
+# }
+
+output "vsphere_private_ip" {
+  value = vsphere_virtual_machine.vm_01.*.default_ip_address
+}
+
