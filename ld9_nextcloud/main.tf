@@ -34,10 +34,10 @@ data "vsphere_virtual_machine" "template" {
 resource "vsphere_virtual_machine" "ld9_prod_nextcloud" {
   wait_for_guest_net_timeout = "15"
   count                    = var.vm_count_nextcloud
-  name                     = "${var.vm_name_linux_test}${format("%02d", count.index+01)}"
+  name                     = "${var.vm_name_nextcloud}${format("%02d", count.index+01)}"
   resource_pool_id         = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_cluster_id     = data.vsphere_datastore_cluster.datastore.id 
-  folder                   = var.vsphere_vm_folder 
+  folder                   = var.vsphere_linux_vm_folder 
   annotation		           = var.vm_annotation
   guest_id                 = data.vsphere_virtual_machine.template.guest_id
   scsi_type                = data.vsphere_virtual_machine.template.scsi_type
@@ -48,12 +48,12 @@ resource "vsphere_virtual_machine" "ld9_prod_nextcloud" {
             #adapter_type  = data.vsphere_virtual_machine.template.network_interface_type[0]
   }
   disk {      
-    label            = "${var.vm_name_01}disk01.vmdk"
+    label            = "${var.vm_name_nextcloud}_disk01.vmdk"
     size             = data.vsphere_virtual_machine.template.disks.0.size    
     thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
   }
   disk {      
-    label 	         = "${var.vm_name_01}_disk02.vmdk"
+    label 	         = "${var.vm_name_nextcloud}_disk02.vmdk"
     size             = "400"   
     unit             = 1
     thin_provisioned = true
@@ -64,7 +64,7 @@ resource "vsphere_virtual_machine" "ld9_prod_nextcloud" {
       timeout = "600"
       customize {
         linux_options {
-          host_name = "${var.vm_name_01}${format("%02d", count.index+01)}"
+          host_name = "${var.vm_name_nextcloud}${format("%02d", count.index+01)}"
           domain = "amtrustservices.com"
         }
         network_interface {
@@ -111,6 +111,6 @@ resource "vsphere_virtual_machine" "ld9_prod_nextcloud" {
 # }
 
 output "vsphere_private_ip" {
-  value = vsphere_virtual_machine.vm_name_linux_test.*.default_ip_address
+  value = vsphere_virtual_machine.vm_name_nextcloud.*.default_ip_address
 }
 

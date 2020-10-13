@@ -26,7 +26,7 @@ variable "virtual_machine_dns_servers" {
    type    = list(string)
 }
 
-variable "vm_name_linux_test" {
+variable "vm_name_nextcloud" {
   description = "Name for the VM(s)"
   default = "ld9pnc"
 }
