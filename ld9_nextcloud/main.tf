@@ -1,6 +1,6 @@
 provider "vsphere" {
   user           = var.vsphere_user
-  password       = var.vsphere_admin_password
+  password       = var.vsphere_user_password
   vsphere_server = var.vsphere_server
 
   # If you have a self-signed cert
@@ -111,6 +111,6 @@ resource "vsphere_virtual_machine" "ld9_prod_nextcloud" {
 # }
 
 output "vsphere_private_ip" {
-  value = vsphere_virtual_machine.vm_01.*.default_ip_address
+  value = vsphere_virtual_machine.vm_name_linux_test.*.default_ip_address
 }
 
