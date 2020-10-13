@@ -55,7 +55,7 @@ resource "vsphere_virtual_machine" "ld9_prod_nextcloud" {
   disk {      
     label 	         = "${var.vm_name_nextcloud}_disk02.vmdk"
     size             = "400"   
-    unit             = 1
+    unit_number      = 1
     thin_provisioned = true
   }
   
@@ -111,6 +111,6 @@ resource "vsphere_virtual_machine" "ld9_prod_nextcloud" {
 # }
 
 output "vsphere_private_ip" {
-  value = vsphere_virtual_machine.vm_name_nextcloud.*.default_ip_address
+  value = vsphere_virtual_machine.ld9_prod_nextcloud.*.default_ip_address
 }
 
