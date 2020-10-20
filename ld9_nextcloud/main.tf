@@ -68,10 +68,10 @@ resource "vsphere_virtual_machine" "ld9_prod_nextcloud" {
           domain = "amtrustservices.com"
         }
         network_interface {
-            ipv4_address = "10.94.8.106"
+            ipv4_address = "10.95.4.106"
             ipv4_netmask = "22"        
         }
-        ipv4_gateway = "10.94.8.1"
+        ipv4_gateway = "10.95.4.1"
         dns_server_list = var.virtual_machine_dns_servers
         dns_suffix_list = ["amtrustservices.com", "serv.infr.it.amtrustna.com"]
         timeout = "600"       
