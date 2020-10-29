@@ -111,6 +111,6 @@ resource "vsphere_virtual_machine" "vm" {
 # }
 
 output "vsphere_private_ip" {
-  value = vsphere_virtual_machine.vm_name.*.default_ip_address
+  value = vsphere_virtual_machine.vm.*.default_ip_address
 }
 
