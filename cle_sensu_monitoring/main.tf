@@ -71,7 +71,7 @@ resource "vsphere_virtual_machine" "vm" {
             ipv4_address = var.vm_ipv4_addr
             ipv4_netmask = var.vm_ipv4_netmask
         }
-        ipv4_gateway = "10.95.4.1"
+        ipv4_gateway = var.vm_ipv4_gateway
         dns_server_list = var.virtual_machine_dns_servers
         dns_suffix_list = ["amtrustservices.com", "serv.infr.it.amtrustna.com"]
         timeout = "600"       

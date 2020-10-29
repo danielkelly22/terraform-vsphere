@@ -9,6 +9,7 @@ variable "vsphere_machine_template" {}
 variable "vm_ipv4_addr" {}
 variable "vm_ipv4_netmask" {}
 variable "domain_name" {}
+variable "vm_ipv4_gateway" {}
 
 variable "vsphere_user_password" {
   type  = string
