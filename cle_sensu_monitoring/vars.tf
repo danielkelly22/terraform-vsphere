@@ -2,7 +2,7 @@ variable "vsphere_server" {}
 variable "vsphere_user" {}
 variable "vsphere_datacenter" {}
 variable "vsphere_vm_folder" {}
-variable "vsphere_compute_cluster" {}
+variable "vsphere_resource_pool" {}
 variable "vsphere_datastore_cluster" {}
 variable "vsphere_vm_network" {}
 variable "vsphere_machine_template" {}

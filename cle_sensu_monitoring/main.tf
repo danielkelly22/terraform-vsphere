@@ -16,8 +16,8 @@ data "vsphere_datastore_cluster" "datastore" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-data  "vsphere_compute_cluster" "cluster" {
-  name            = var.vsphere_compute_cluster
+data  "vsphere_resource_pool" "pool" {
+  name            = var.vsphere_resource_pool
   datacenter_id   = data.vsphere_datacenter.dc.id 
 }
 
@@ -35,7 +35,7 @@ resource "vsphere_virtual_machine" "vm" {
   wait_for_guest_net_timeout = "15"
   count                    = var.vm_count
   name                     = "${var.vm_name}${format("%02d", count.index+01)}"
-  resource_pool_id         = data.vsphere_compute_cluster.cluster.resource_pool_id
+  resource_pool_id         = data.vsphere_resource_pool.pool.id
   datastore_cluster_id     = data.vsphere_datastore_cluster.datastore.id 
   folder                   = var.vsphere_vm_folder 
   annotation		           = var.vm_annotation
