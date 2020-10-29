@@ -22,7 +22,7 @@ data  "vsphere_compute_cluster" "cluster" {
 }
 
 data "vsphere_network" "network" {
-  name          = var.vsphere_network
+  name          = var.vsphere_vm_network
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 

@@ -4,7 +4,7 @@ variable "vsphere_datacenter" {}
 variable "vsphere_vm_folder" {}
 variable "vsphere_compute_cluster" {}
 variable "vsphere_datastore_cluster" {}
-variable "vsphere__network" {}
+variable "vsphere_vm_network" {}
 variable "vsphere_machine_template" {}
 variable "vm_ipv4_addr" {}
 variable "vm_ipv4_netmask" {}
