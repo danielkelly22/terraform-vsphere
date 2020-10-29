@@ -5,7 +5,7 @@ variable "vsphere_vm_folder" {}
 variable "vsphere_compute_cluster" {}
 variable "vsphere_datastore_cluster" {}
 variable "vsphere__network" {}
-variable "vsphere_template" {}
+variable "vsphere_machine_template" {}
 variable "vm_ipv4_addr" {}
 variable "vm_ipv4_netmask" {}
 variable "domain_name" {}
