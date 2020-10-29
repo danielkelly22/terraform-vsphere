@@ -48,12 +48,12 @@ resource "vsphere_virtual_machine" "vm" {
             #adapter_type  = data.vsphere_virtual_machine.template.network_interface_type[0]
   }
   disk {      
-    label            = "${var.vm_name}_disk01.vmdk"
+    label            = "${var.vm_name}${format("%02d", count.index+01)}_disk01.vmdk"
     size             = data.vsphere_virtual_machine.template.disks.0.size    
     thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
   }
   disk {      
-    label 	         = "${var.vm_name}_disk02.vmdk"
+    label 	         = "${var.vm_name}${format("%02d", count.index+01)}_disk02.vmdk"
     size             = "400"   
     unit_number      = 1
     thin_provisioned = true
