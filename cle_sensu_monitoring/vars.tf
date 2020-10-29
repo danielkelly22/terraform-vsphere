@@ -1,12 +1,13 @@
 variable "vsphere_server" {}
 variable "vsphere_user" {}
 variable "vsphere_datacenter" {}
-variable "vsphere_linux_vm_folder" {}
-variable "vsphere_linux_compute_cluster" {}
-variable "vsphere_linux_datastore_cluster" {}
-variable "vsphere_ld9_dmz_web_app_network" {}
-variable "vsphere_linux_machine_template" {}
-variable "vm_app_dev_ip_address" {}
+variable "vsphere_vm_folder" {}
+variable "vsphere_compute_cluster" {}
+variable "vsphere_datastore_cluster" {}
+variable "vsphere__network" {}
+variable "vsphere_template" {}
+variable "vm_ipv4_addr" {}
+variable "vm_ipv4_netmask" {}
 variable "domain_name" {}
 
 variable "vsphere_user_password" {
@@ -26,17 +27,17 @@ variable "virtual_machine_dns_servers" {
    type    = list(string)
 }
 
-variable "vm_name_nextcloud" {
+variable "vm_name" {
   description = "Name for the VM(s)"
-  default = "ld9pnc"
+  default = "cledsensu"
 }
 
 variable "vm_annotation" {
   description = "Annotation to add to the VM(s)"
-  default =  "Contact: Stephen Zuk, Eng Linux Support \n Description: LD9 Nextcloud Instance \n Ticket: N/A \n Created By: built via Terraform \n Created On: 10/07/2020"
+  default =  "Contact: Stephen Zuk, Eng Linux Support \n Description: Sensu Monitoring POC \n Ticket: N/A \n Created By: built via Terraform \n Created On: 10/07/2020"
 }
 
-variable "vm_count_nextcloud" {
+variable "vm_count" {
   description = "Number of VMs to build"
   default = "1"
 }
