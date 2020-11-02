@@ -6,7 +6,6 @@ variable "vsphere_compute_cluster" {}
 variable "vsphere_datastore_cluster" {}
 variable "vsphere_network" {}
 variable "vsphere_machine_template" {}
-variable "vm_ipv4_address" {}
 variable "domain_name" {}
 
 variable "vsphere_user_password" {
