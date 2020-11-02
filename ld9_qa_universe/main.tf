@@ -34,7 +34,7 @@ data "vsphere_virtual_machine" "template" {
 resource "vsphere_virtual_machine" "vm" {
   wait_for_guest_net_timeout = "15"
   count                    = var.vm_count
-  name                     = "${var.vm_name}"
+  name                     = var.vm_name
   resource_pool_id         = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_cluster_id     = data.vsphere_datastore_cluster.datastore.id 
   folder                   = var.vsphere_vm_folder 
@@ -64,7 +64,7 @@ resource "vsphere_virtual_machine" "vm" {
       timeout = "600"
       customize {
         linux_options {
-          host_name = "${var.vm_name}"
+          host_name = var.vm_name
           domain = "amtrustservices.com"
         }
         network_interface {
