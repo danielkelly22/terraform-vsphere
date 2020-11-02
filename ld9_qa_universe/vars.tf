@@ -32,7 +32,7 @@ variable "vm_name" {
 
 variable "vm_annotation" {
   description = "Annotation to add to the VM(s)"
-  default =  "Contact: Jason Fuller, Eng Linux Support \n Description: LD9 Nextcloud Instance \n Ticket: N/A \n Created By: built via Terraform \n Created On: 10/07/2020"
+  default =  "Contact: Jason Fuller, Eng Linux Support \n Description: LD9 Universe (QA) Instance \n Ticket: RITM0112544 \n Created By: built via Terraform \n Created On: 10/07/2020"
 }
 
 variable "vm_count" {
