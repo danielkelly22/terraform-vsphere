@@ -35,7 +35,7 @@ variable "vm_annotation" {
   default =  "Contact: Jason Fuller, Eng Linux Support \n Description: LD9 Nextcloud Instance \n Ticket: N/A \n Created By: built via Terraform \n Created On: 10/07/2020"
 }
 
-variable "vm_count_" {
+variable "vm_count" {
   description = "Number of VMs to build"
   default = "1"
 }
