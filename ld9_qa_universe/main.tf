@@ -49,12 +49,12 @@ resource "vsphere_virtual_machine" "vm" {
   }
   disk {      
     label            = "${var.vm_name}_disk01.vmdk"
-    size             = data.vsphere_virtual_machine.template.disks.0.size    
+    size             = "250"    
     thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
   }
   disk {      
     label 	         = "${var.vm_name}_disk02.vmdk"
-    size             = "400"   
+    size             = "3000"   
     unit_number      = 1
     thin_provisioned = true
   }
