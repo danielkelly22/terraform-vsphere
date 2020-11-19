@@ -180,7 +180,7 @@ resource "null_resource" "install_storage" {
 
     connection {
         type                    = "ssh"
-        host                    = vsphere_virtual_machine[each.key].default_ip_address
+        host                    = vsphere_virtual_machine.storage[each.key].default_ip_address
         user                    = var.image.username
         private_key             = var.ssh.private_key
     }
