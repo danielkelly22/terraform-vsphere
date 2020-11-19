@@ -119,7 +119,7 @@ resource "vsphere_virtual_machine" "transit" {
 
         customize {
             linux_options {
-                host_name       = self.name
+                host_name       = "${var.info.name}-transit"
                 domain          = var.vsphere.domain
             }
 
@@ -161,7 +161,7 @@ resource "vsphere_virtual_machine" "storage" {
 
         customize {
             linux_options {
-                host_name       = self.name
+                host_name       = "${var.info.name}-storage-${each.key}"
                 domain          = var.vsphere.domain
             }
 
@@ -222,7 +222,7 @@ resource "vsphere_virtual_machine" "vault" {
 
         customize {
             linux_options {
-                host_name       = self.name
+                host_name       = "${var.info.name}-vault-${each.key}"
                 domain          = var.vsphere.domain
             }
 
