@@ -80,7 +80,7 @@ data "vsphere_virtual_machine" "template" {
 //  Virtual Machines
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 resource "vsphere_virtual_machine" "transit" {
-    name                        = "${var.info.name}vaulttrn01"
+    name                        = "${var.info.name}vaulttran01"
     resource_pool_id            = data.vsphere_compute_cluster.cluster.resource_pool_id
     datastore_id                = data.vsphere_datastore.datastore.id
     guest_id                    = data.vsphere_virtual_machine.template.guest_id
@@ -106,7 +106,7 @@ resource "vsphere_virtual_machine" "transit" {
 
         customize {
             linux_options {
-                host_name       = "${var.info.name}-transit"
+                host_name       = "${var.info.name}vaulttran01"
                 domain          = var.vsphere.domain
             }
 
@@ -122,7 +122,7 @@ resource "vsphere_virtual_machine" "transit" {
 
 resource "vsphere_virtual_machine" "storage" {
     for_each                    = var.storage_zones
-    name                        = "${var.info.name}vaultsto0${each.key}"
+    name                        = "${var.info.name}vaultstor0${each.key}"
     resource_pool_id            = data.vsphere_compute_cluster.cluster.resource_pool_id
     datastore_id                = data.vsphere_datastore.datastore.id
     guest_id                    = data.vsphere_virtual_machine.template.guest_id
@@ -148,7 +148,7 @@ resource "vsphere_virtual_machine" "storage" {
 
         customize {
             linux_options {
-                host_name       = "${var.info.name}vaultsto0${each.key}"
+                host_name       = "${var.info.name}vaultstor0${each.key}"
                 domain          = var.vsphere.domain
             }
 
