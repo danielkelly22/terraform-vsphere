@@ -122,7 +122,7 @@ resource "vsphere_virtual_machine" "transit" {
 
 resource "vsphere_virtual_machine" "storage" {
     for_each                    = var.storage_zones
-    name                        = "${var.info.name}vaultsto${each.key}"
+    name                        = "${var.info.name}vaultsto0${each.key}"
     resource_pool_id            = data.vsphere_compute_cluster.cluster.resource_pool_id
     datastore_id                = data.vsphere_datastore.datastore.id
     guest_id                    = data.vsphere_virtual_machine.template.guest_id
@@ -148,7 +148,7 @@ resource "vsphere_virtual_machine" "storage" {
 
         customize {
             linux_options {
-                host_name       = "${var.info.name}-storage-${each.key}"
+                host_name       = "${var.info.name}vaultsto0${each.key}"
                 domain          = var.vsphere.domain
             }
 
@@ -183,7 +183,7 @@ resource "null_resource" "install_storage" {
 
 resource "vsphere_virtual_machine" "vault" {
     for_each                    = var.vault_zones
-    name                        = "${var.info.name}vault${each.key}"
+    name                        = "${var.info.name}vault0${each.key}"
     resource_pool_id            = data.vsphere_compute_cluster.cluster.resource_pool_id
     datastore_id                = data.vsphere_datastore.datastore.id
     guest_id                    = data.vsphere_virtual_machine.template.guest_id
@@ -209,7 +209,7 @@ resource "vsphere_virtual_machine" "vault" {
 
         customize {
             linux_options {
-                host_name       = "${var.info.name}-vault-${each.key}"
+                host_name       = "${var.info.name}vault0${each.key}"
                 domain          = var.vsphere.domain
             }
 
