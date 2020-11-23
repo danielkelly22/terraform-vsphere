@@ -103,6 +103,7 @@ resource "vsphere_virtual_machine" "transit" {
 
     clone {
         template_uuid           = data.vsphere_virtual_machine.template.id
+        timeout                 = "600"
 
         customize {
             linux_options {
@@ -116,6 +117,9 @@ resource "vsphere_virtual_machine" "transit" {
             }
 
             ipv4_gateway        = var.server.gateway
+            dns_server_list = ["10.10.10.9", "10.10.10.13"]
+            dns_suffix_list = ["amtrustservices.com", "serv.infr.it.amtrustna.com"]
+            timeout = "600"       
         }
     }
 }
@@ -145,6 +149,7 @@ resource "vsphere_virtual_machine" "storage" {
 
     clone {
         template_uuid           = data.vsphere_virtual_machine.template.id
+        timeout                 = "600"
 
         customize {
             linux_options {
@@ -158,6 +163,9 @@ resource "vsphere_virtual_machine" "storage" {
             }
 
             ipv4_gateway        = var.server.gateway
+            dns_server_list = ["10.10.10.9", "10.10.10.13"]
+            dns_suffix_list = ["amtrustservices.com", "serv.infr.it.amtrustna.com"]
+            timeout = "600"       
         }
     }
 }
@@ -206,6 +214,7 @@ resource "vsphere_virtual_machine" "vault" {
 
     clone {
         template_uuid           = data.vsphere_virtual_machine.template.id
+        timeout                 = "600"
 
         customize {
             linux_options {
@@ -219,6 +228,9 @@ resource "vsphere_virtual_machine" "vault" {
             }
 
             ipv4_gateway        = var.server.gateway
+            dns_server_list = ["10.10.10.9", "10.10.10.13"]
+            dns_suffix_list = ["amtrustservices.com", "serv.infr.it.amtrustna.com"]
+            timeout = "600"       
         }
     }
 }
