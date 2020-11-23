@@ -14,7 +14,7 @@ provider "vsphere" {
     allow_unverified_ssl        = true
 }
 
-/*
+
 locals {
     storage_servers_private     = [
         for key in keys(var.storage_zones):
@@ -40,7 +40,7 @@ locals {
     tags                        = {
     }
 }
-*/
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Data
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,8 +54,7 @@ data "external" "transit" {
     }
     depends_on                  = [vsphere_virtual_machine.transit]
 }
-
-/*        
+     
 data "external" "vault" {
     program                     = ["bash", "${path.module}/../templates/vault.sh"]
     query                       = {
@@ -65,9 +64,8 @@ data "external" "vault" {
         private_key             = var.ssh.private_key
     }
     depends_on                  = [null_resource.install_vault]
-}
-*/
-            
+}            
+
 data "vsphere_datacenter" "dc" {
     name                        = var.vsphere.datacenter
 }
@@ -140,7 +138,6 @@ resource "vsphere_virtual_machine" "transit" {
     }
 }
 
-/*
 resource "vsphere_virtual_machine" "storage" {
     for_each                    = var.storage_zones
     name                        = "${var.info.name}vaultstor0${each.key}"
@@ -251,8 +248,7 @@ resource "vsphere_virtual_machine" "vault" {
         }
     }
 }
-*/
-/*            
+          
 resource "null_resource" "install_vault" {
     for_each                    = vsphere_virtual_machine.vault
 
@@ -275,4 +271,3 @@ resource "null_resource" "install_vault" {
 
     depends_on                  = [vsphere_virtual_machine.transit, vsphere_virtual_machine.vault, null_resource.install_storage]
 }
-*/
