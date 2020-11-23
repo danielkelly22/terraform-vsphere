@@ -53,6 +53,17 @@ data "external" "transit" {
     }
     depends_on                  = [vsphere_virtual_machine.transit]
 }
+        
+data "external" "vault" {
+    program                     = ["bash", "${path.module}/../templates/vault.sh"]
+    query                       = {
+        execution_path          = path.module
+        username                = var.image.username
+        vault_ips               = join(" ", local.vault_servers_private)
+        private_key             = var.ssh.private_key
+    }
+    depends_on                  = [null_resource.install_vault]
+}
 
 data "vsphere_datacenter" "dc" {
     name                        = var.vsphere.datacenter
