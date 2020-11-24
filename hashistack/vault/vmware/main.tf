@@ -273,7 +273,7 @@ resource "null_resource" "install_storage" {
     provisioner "remote-exec" {
         inline                  = [
             "sudo chmod +x /root/tf_scripts/consul.sh",
-            "sudo /root/tf_scripts/consul.sh -a 'server' -d '${var.info.data_center}' -v '${var.info.consul_version}' -l '${var.info.consul_license}' -e '${var.info.consul_encrypt}' -b '{{ GetInterfaceIP \\\"eth0\\\" }}' -s ${length(var.storage_zones)} -r '${local.storage_retry_join}'",
+            "sudo /root/tf_scripts/consul.sh -a 'server' -d '${var.info.data_center}' -v '${var.info.consul_version}' -l '${var.info.consul_license}' -e '${var.info.consul_encrypt}' -b '{{ GetInterfaceIP \\\"ens192\\\" }}' -s ${length(var.storage_zones)} -r '${local.storage_retry_join}'",
             "sudo rm -r /root/tf_scripts/consul.sh",
         ]
     }
@@ -369,7 +369,7 @@ resource "null_resource" "install_vault" {
     provisioner "remote-exec" {
         inline                  = [
             "sudo chmod +x /root/tf_scripts/consul.sh",
-            "sudo /root/tf_scripts/consul.sh -d '${var.info.data_center}' -v '${var.info.consul_version}' -e '${var.info.consul_encrypt}' -b '{{ GetInterfaceIP \\\"eth0\\\" }}' -r '${local.storage_retry_join}' -x '127.0.0.1'",
+            "sudo /root/tf_scripts/consul.sh -d '${var.info.data_center}' -v '${var.info.consul_version}' -e '${var.info.consul_encrypt}' -b '{{ GetInterfaceIP \\\"ens192\\\" }}' -r '${local.storage_retry_join}' -x '127.0.0.1'",
             "sudo chmod +x /root/tf_scripts/vault.sh",
             "sudo /root/tf_scripts/vault.sh -d '${var.info.data_center}' -v '${var.info.vault_version}' -t '${vsphere_virtual_machine.transit.default_ip_address}' -a '${data.external.transit.result.autounseal_token}'",
             "sudo rm -r /root/tf_scripts/*.sh",
