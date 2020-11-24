@@ -140,15 +140,14 @@ resource "vsphere_virtual_machine" "transit" {
     
     provisioner "file" {
         source                  = "../../scripts/transit.sh"
-        destination             = "/tmp/transit.sh"
+        destination             = "/root/tf_scripts/transit.sh"
         
         connection {
             type                    = "ssh"
             host                    = self.default_ip_address
             user                    = var.image.username
             private_key             = var.ssh.private_key
-            timeout                 = "10m"
-            
+            timeout                 = "10m"           
         }
     }
 
@@ -164,6 +163,7 @@ resource "vsphere_virtual_machine" "transit" {
             user                    = var.image.username
             private_key             = var.ssh.private_key
             timeout                 = "10m"
+            script_path             = "/root/tf_scripts/terraformprovisioner.sh"
             
         }
     }       
@@ -216,7 +216,7 @@ resource "vsphere_virtual_machine" "storage" {
     }
     provisioner "file" {
         source                  = "../../scripts/consul.sh"
-        destination             = "/tmp/consul.sh"
+        destination             = "/root/tf_scripts/consul.sh"
         
         connection {
             type                    = "ssh"
@@ -238,6 +238,7 @@ resource "null_resource" "install_storage" {
         user                    = var.image.username
         private_key             = var.ssh.private_key
         timeout                 = "10m"
+        script_path             = "/root/tf_scripts/terraformprovisioner.sh"
     }
 
     provisioner "remote-exec" {
@@ -296,7 +297,7 @@ resource "vsphere_virtual_machine" "vault" {
     }
     provisioner "file" {
         source                  = "../../scripts/"
-        destination             = "/tmp"
+        destination             = "/root/tf_scripts"
         
         connection {
             type                    = "ssh"
@@ -318,6 +319,7 @@ resource "null_resource" "install_vault" {
         user                    = var.image.username
         private_key             = var.ssh.private_key
         timeout                 = "10m"
+        script_path             = "/root/tf_scripts/terraformprovisioner.sh"
     }
 
     provisioner "remote-exec" {
