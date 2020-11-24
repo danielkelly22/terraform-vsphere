@@ -144,7 +144,7 @@ resource "vsphere_virtual_machine" "transit" {
         
         connection {
             type                    = "ssh"
-            host                    = vsphere_virtual_machine.transit.default_ip_address
+            host                    = self.default_ip_address
             user                    = var.image.username
             private_key             = var.ssh.private_key
             timeout                 = "10m"
@@ -160,7 +160,7 @@ resource "vsphere_virtual_machine" "transit" {
         ]
       connection {
             type                    = "ssh"
-            host                    = vsphere_virtual_machine.transit.default_ip_address
+            host                    = self.default_ip_address
             user                    = var.image.username
             private_key             = var.ssh.private_key
             timeout                 = "10m"
@@ -220,7 +220,7 @@ resource "vsphere_virtual_machine" "storage" {
         
         connection {
             type                    = "ssh"
-            host                    = vsphere_virtual_machine.storage[each.key].default_ip_address
+            host                    = self.default_ip_address
             user                    = var.image.username
             private_key             = var.ssh.private_key
             timeout                 = "10m"
@@ -300,7 +300,7 @@ resource "vsphere_virtual_machine" "vault" {
         
         connection {
             type                    = "ssh"
-            host                    = vsphere_virtual_machine.vault[each.key].default_ip_address
+            host                    = self.default_ip_address
             user                    = var.image.username
             private_key             = var.ssh.private_key
             timeout                 = "10m"
