@@ -138,6 +138,19 @@ resource "vsphere_virtual_machine" "transit" {
         }
     }
     
+    provisioner "remote-exec" {
+      inline                  = [
+            "sudo mkdir /root/tf_scripts"
+        ]
+      connection {
+            type                    = "ssh"
+            host                    = self.default_ip_address
+            user                    = var.image.username
+            private_key             = var.ssh.private_key
+            timeout                 = "10m"       
+        }
+    }    
+    
     provisioner "file" {
         source                  = "../../scripts/transit.sh"
         destination             = "/root/tf_scripts/transit.sh"
@@ -153,9 +166,9 @@ resource "vsphere_virtual_machine" "transit" {
 
     provisioner "remote-exec" {
       inline                  = [
-            "sudo chmod +x /tmp/transit.sh",
-            "sudo /tmp/transit.sh -d '${var.info.data_center}' -v '${var.info.vault_version}' -i '${vsphere_virtual_machine.transit.default_ip_address}'",
-            "sudo rm -r /tmp/transit.sh",
+            "sudo chmod +x /root/tf_scripts/transit.sh",
+            "sudo /root/tf_scripts/transit.sh -d '${var.info.data_center}' -v '${var.info.vault_version}' -i '${vsphere_virtual_machine.transit.default_ip_address}'",
+            "sudo rm -r /root/tf_scripts/transit.sh",
         ]
       connection {
             type                    = "ssh"
@@ -214,6 +227,20 @@ resource "vsphere_virtual_machine" "storage" {
             timeout = "600"       
         }
     }
+    
+    provisioner "remote-exec" {
+      inline                  = [
+            "sudo mkdir /root/tf_scripts"
+        ]
+      connection {
+            type                    = "ssh"
+            host                    = self.default_ip_address
+            user                    = var.image.username
+            private_key             = var.ssh.private_key
+            timeout                 = "10m"       
+        }
+    }
+    
     provisioner "file" {
         source                  = "../../scripts/consul.sh"
         destination             = "/root/tf_scripts/consul.sh"
@@ -243,9 +270,9 @@ resource "null_resource" "install_storage" {
 
     provisioner "remote-exec" {
         inline                  = [
-            "sudo chmod +x /tmp/consul.sh",
-            "sudo /tmp/consul.sh -a 'server' -d '${var.info.data_center}' -v '${var.info.consul_version}' -l '${var.info.consul_license}' -e '${var.info.consul_encrypt}' -b '{{ GetInterfaceIP \\\"eth0\\\" }}' -s ${length(var.storage_zones)} -r '${local.storage_retry_join}'",
-            "sudo rm -r /tmp/consul.sh",
+            "sudo chmod +x /root/tf_scripts/consul.sh",
+            "sudo /root/tf_scripts/consul.sh -a 'server' -d '${var.info.data_center}' -v '${var.info.consul_version}' -l '${var.info.consul_license}' -e '${var.info.consul_encrypt}' -b '{{ GetInterfaceIP \\\"eth0\\\" }}' -s ${length(var.storage_zones)} -r '${local.storage_retry_join}'",
+            "sudo rm -r /root/tf_scripts/consul.sh",
         ]
     }
 }
@@ -295,6 +322,20 @@ resource "vsphere_virtual_machine" "vault" {
             timeout = "600"       
         }
     }
+    
+    provisioner "remote-exec" {
+      inline                  = [
+            "sudo mkdir /root/tf_scripts"
+        ]
+      connection {
+            type                    = "ssh"
+            host                    = self.default_ip_address
+            user                    = var.image.username
+            private_key             = var.ssh.private_key
+            timeout                 = "10m"       
+        }
+    }
+    
     provisioner "file" {
         source                  = "../../scripts/"
         destination             = "/root/tf_scripts"
@@ -324,11 +365,11 @@ resource "null_resource" "install_vault" {
 
     provisioner "remote-exec" {
         inline                  = [
-            "sudo chmod +x /tmp/consul.sh",
-            "sudo /tmp/consul.sh -d '${var.info.data_center}' -v '${var.info.consul_version}' -e '${var.info.consul_encrypt}' -b '{{ GetInterfaceIP \\\"eth0\\\" }}' -r '${local.storage_retry_join}' -x '127.0.0.1'",
-            "sudo chmod +x /tmp/vault.sh",
-            "sudo /tmp/vault.sh -d '${var.info.data_center}' -v '${var.info.vault_version}' -t '${vsphere_virtual_machine.transit.default_ip_address}' -a '${data.external.transit.result.autounseal_token}'",
-            "sudo rm -r /tmp/*.sh",
+            "sudo chmod +x /root/tf_scripts/consul.sh",
+            "sudo /root/tf_scripts/consul.sh -d '${var.info.data_center}' -v '${var.info.consul_version}' -e '${var.info.consul_encrypt}' -b '{{ GetInterfaceIP \\\"eth0\\\" }}' -r '${local.storage_retry_join}' -x '127.0.0.1'",
+            "sudo chmod +x /root/tf_scripts/vault.sh",
+            "sudo /root/tf_scripts/vault.sh -d '${var.info.data_center}' -v '${var.info.vault_version}' -t '${vsphere_virtual_machine.transit.default_ip_address}' -a '${data.external.transit.result.autounseal_token}'",
+            "sudo rm -r /root/tf_scripts/*.sh",
         ]
     }
 
