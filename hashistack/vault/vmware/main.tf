@@ -140,7 +140,7 @@ resource "vsphere_virtual_machine" "transit" {
     
     provisioner "file" {
         source                  = "../../scripts/transit.sh"
-        destination             = "/tmp/transit.sh
+        destination             = "/tmp/transit.sh"
         
         connection {
             type                    = "ssh"
