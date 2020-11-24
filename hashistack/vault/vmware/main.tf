@@ -132,8 +132,8 @@ resource "vsphere_virtual_machine" "transit" {
             }
 
             ipv4_gateway        = var.server.gateway
-            dns_server_list = ["10.10.10.9", "10.10.10.13"]
-            dns_suffix_list = ["amtrustservices.com", "serv.infr.it.amtrustna.com"]
+            dns_server_list = var.dns_servers
+            dns_suffix_list = var.dns_suffix_list
             timeout = "600"       
         }
     }
@@ -223,8 +223,8 @@ resource "vsphere_virtual_machine" "storage" {
             }
 
             ipv4_gateway        = var.server.gateway
-            dns_server_list = ["10.10.10.9", "10.10.10.13"]
-            dns_suffix_list = ["amtrustservices.com", "serv.infr.it.amtrustna.com"]
+            dns_server_list = var.dns_servers
+            dns_suffix_list = var.dns_suffix_list
             timeout = "600"       
         }
     }
@@ -319,8 +319,8 @@ resource "vsphere_virtual_machine" "vault" {
             }
 
             ipv4_gateway        = var.server.gateway
-            dns_server_list = ["10.10.10.9", "10.10.10.13"]
-            dns_suffix_list = ["amtrustservices.com", "serv.infr.it.amtrustna.com"]
+            dns_server_list = var.dns_servers
+            dns_suffix_list = var.dns_suffix_list
             timeout = "600"       
         }
     }
