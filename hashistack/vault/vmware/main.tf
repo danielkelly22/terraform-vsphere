@@ -147,7 +147,8 @@ resource "vsphere_virtual_machine" "transit" {
             host                    = self.default_ip_address
             user                    = var.image.username
             private_key             = var.ssh.private_key
-            timeout                 = "10m"       
+            timeout                 = "10m"
+            script_path             = "/root/terraform.sh"
         }
     }    
     
@@ -237,7 +238,8 @@ resource "vsphere_virtual_machine" "storage" {
             host                    = self.default_ip_address
             user                    = var.image.username
             private_key             = var.ssh.private_key
-            timeout                 = "10m"       
+            timeout                 = "10m"
+            script_path             = "/root/terraform.sh"
         }
     }
     
@@ -332,7 +334,8 @@ resource "vsphere_virtual_machine" "vault" {
             host                    = self.default_ip_address
             user                    = var.image.username
             private_key             = var.ssh.private_key
-            timeout                 = "10m"       
+            timeout                 = "10m"
+            script_path             = "/root/terraform.sh"
         }
     }
     
