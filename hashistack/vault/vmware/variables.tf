@@ -70,3 +70,11 @@ variable "server" {
     type                = map
     description         = "Server Configuration Variables"
 }
+
+variable "dns_servers" {
+    type                = list(string)
+}
+
+variable "dns_suffix_List" {
+    type                = list(string)
+}
