@@ -49,7 +49,7 @@ data "external" "transit" {
     query                       = {
         execution_path          = path.module
         username                = var.image.username
-        public_ip               = vsphere_virtual_machine.transit.default_ip_address
+        public_ip               = vsphere_virtual_machine.transit.default_ip_address"
         private_key             = var.ssh.private_key
     }
     depends_on                  = [vsphere_virtual_machine.transit]
@@ -94,6 +94,7 @@ data "vsphere_virtual_machine" "template" {
 //  Virtual Machines
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 resource "vsphere_virtual_machine" "transit" {
+    wait_for_guest_net_timeout  = "15"
     name                        = "${var.info.name}vaulttran01"
     resource_pool_id            = data.vsphere_compute_cluster.cluster.resource_pool_id
     datastore_id                = data.vsphere_datastore.datastore.id
@@ -136,9 +137,40 @@ resource "vsphere_virtual_machine" "transit" {
             timeout = "600"       
         }
     }
+    
+    provisioner "file" {
+        source                  = "../../scripts/transit.sh"
+        destination             = "/tmp/transit.sh
+        
+        connection {
+            type                    = "ssh"
+            host                    = vsphere_virtual_machine.transit.default_ip_address
+            user                    = var.image.username
+            private_key             = var.ssh.private_key
+            timeout                 = "10m"
+            
+        }
+    }
+
+    provisioner "remote-exec" {
+      inline                  = [
+            "sudo chmod +x /tmp/transit.sh",
+            "sudo /tmp/transit.sh -d '${var.info.data_center}' -v '${var.info.vault_version}' -i '${vsphere_virtual_machine.transit.default_ip_address}'",
+            "sudo rm -r /tmp/transit.sh",
+        ]
+      connection {
+            type                    = "ssh"
+            host                    = vsphere_virtual_machine.transit.default_ip_address
+            user                    = var.image.username
+            private_key             = var.ssh.private_key
+            timeout                 = "10m"
+            
+        }
+    }       
 }
 
 resource "vsphere_virtual_machine" "storage" {
+    wait_for_guest_net_timeout  = "15"
     for_each                    = var.storage_zones
     name                        = "${var.info.name}vaultstor0${each.key}"
     resource_pool_id            = data.vsphere_compute_cluster.cluster.resource_pool_id
@@ -182,6 +214,19 @@ resource "vsphere_virtual_machine" "storage" {
             timeout = "600"       
         }
     }
+    provisioner "file" {
+        source                  = "../../scripts/consul.sh"
+        destination             = "/tmp/consul.sh"
+        
+        connection {
+            type                    = "ssh"
+            host                    = vsphere_virtual_machine.transit.default_ip_address
+            user                    = var.image.username
+            private_key             = var.ssh.private_key
+            timeout                 = "10m"
+            
+        }
+    }
 }
 
 resource "null_resource" "install_storage" {
@@ -192,6 +237,7 @@ resource "null_resource" "install_storage" {
         host                    = vsphere_virtual_machine.storage[each.key].default_ip_address
         user                    = var.image.username
         private_key             = var.ssh.private_key
+        timeout                 = "10m"
     }
 
     provisioner "remote-exec" {
@@ -204,6 +250,7 @@ resource "null_resource" "install_storage" {
 }
 
 resource "vsphere_virtual_machine" "vault" {
+    wait_for_guest_net_timeout  = "15"
     for_each                    = var.vault_zones
     name                        = "${var.info.name}vault0${each.key}"
     resource_pool_id            = data.vsphere_compute_cluster.cluster.resource_pool_id
@@ -247,6 +294,19 @@ resource "vsphere_virtual_machine" "vault" {
             timeout = "600"       
         }
     }
+    provisioner "file" {
+        source                  = "../../scripts/"
+        destination             = "/tmp"
+        
+        connection {
+            type                    = "ssh"
+            host                    = vsphere_virtual_machine.transit.default_ip_address
+            user                    = var.image.username
+            private_key             = var.ssh.private_key
+            timeout                 = "10m"
+            
+        }
+    }
 }
           
 resource "null_resource" "install_vault" {
@@ -257,6 +317,7 @@ resource "null_resource" "install_vault" {
         host                    = vsphere_virtual_machine.vault[each.key].default_ip_address
         user                    = var.image.username
         private_key             = var.ssh.private_key
+        timeout                 = "10m"
     }
 
     provisioner "remote-exec" {
