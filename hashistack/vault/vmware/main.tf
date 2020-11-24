@@ -148,7 +148,7 @@ resource "vsphere_virtual_machine" "transit" {
             user                    = var.image.username
             private_key             = var.ssh.private_key
             timeout                 = "10m"
-            script_path             = "/root/terraform.sh"
+            script_path             = "/root/terraform_mkdir.sh"
         }
     }    
     
@@ -177,7 +177,7 @@ resource "vsphere_virtual_machine" "transit" {
             user                    = var.image.username
             private_key             = var.ssh.private_key
             timeout                 = "10m"
-            script_path             = "/root/tf_scripts/terraformprovisioner.sh"
+            script_path             = "/root/tf_scripts/terraform_transit_provisioner.sh"
             
         }
     }       
@@ -239,7 +239,7 @@ resource "vsphere_virtual_machine" "storage" {
             user                    = var.image.username
             private_key             = var.ssh.private_key
             timeout                 = "10m"
-            script_path             = "/root/terraform.sh"
+            script_path             = "/root/terraform_mkdir.sh"
         }
     }
     
@@ -267,7 +267,7 @@ resource "null_resource" "install_storage" {
         user                    = var.image.username
         private_key             = var.ssh.private_key
         timeout                 = "10m"
-        script_path             = "/root/tf_scripts/terraformprovisioner.sh"
+        script_path             = "/root/tf_scripts/terraform_consul_provisioner.sh"
     }
 
     provisioner "remote-exec" {
@@ -335,7 +335,7 @@ resource "vsphere_virtual_machine" "vault" {
             user                    = var.image.username
             private_key             = var.ssh.private_key
             timeout                 = "10m"
-            script_path             = "/root/terraform.sh"
+            script_path             = "/root/terraform_mkdir.sh"
         }
     }
     
@@ -363,7 +363,7 @@ resource "null_resource" "install_vault" {
         user                    = var.image.username
         private_key             = var.ssh.private_key
         timeout                 = "10m"
-        script_path             = "/root/tf_scripts/terraformprovisioner.sh"
+        script_path             = "/root/tf_scripts/terraform_vault_provisioner.sh"
     }
 
     provisioner "remote-exec" {
