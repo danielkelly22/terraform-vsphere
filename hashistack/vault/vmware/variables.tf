@@ -75,6 +75,6 @@ variable "dns_servers" {
     type                = list(string)
 }
 
-variable "dns_suffix_List" {
+variable "dns_suffix_list" {
     type                = list(string)
 }
