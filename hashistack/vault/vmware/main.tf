@@ -45,8 +45,7 @@ locals {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Data
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-        data "external" "transit" {
+data "external" "transit" {
     program                     = ["bash", "${path.module}/../templates/transit.sh"]
     query                       = {
         execution_path          = path.module
@@ -56,7 +55,7 @@ locals {
     }
     depends_on                  = [vsphere_virtual_machine.transit]
 }
-*/    
+   
 data "external" "vault" {
     program                     = ["bash", "${path.module}/../templates/vault.sh"]
     query                       = {
