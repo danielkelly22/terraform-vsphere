@@ -18,5 +18,13 @@ output "outputs" {
         transit_ssh         = "ssh -o stricthostkeychecking=no ${ var.image.username }@${ vsphere_virtual_machine.transit.default_ip_address } -y"
         transit_root_token  = data.external.transit.result.root_token
         transit_unseal_key  = data.external.transit.result.unseal_key
+        vault_http              = local.vault_http
+        vault_recovery_key_1    = data.external.vault.result.key_1
+        vault_recovery_key_2    = data.external.vault.result.key_2
+        vault_recovery_key_3    = data.external.vault.result.key_3
+        vault_recovery_key_4    = data.external.vault.result.key_4
+        vault_recovery_key_5    = data.external.vault.result.key_5
+        vault_root_token        = data.external.vault.result.root_token
+        vault_ssh               = local.vault_ssh
     }
 }
