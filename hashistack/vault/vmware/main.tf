@@ -48,7 +48,7 @@ locals {
 data "external" "transit" {
     program                     = ["bash", "${path.module}/../templates/transit.sh"]
     query                       = {
-       // execution_path          = path.module
+        execution_path          = path.module
         username                = var.image.username
         public_ip               = vsphere_virtual_machine.transit.default_ip_address
         private_key             = var.ssh.private_key
