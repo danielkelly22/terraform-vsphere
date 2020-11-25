@@ -25,6 +25,7 @@ locals {
         "ssh -o stricthostkeychecking=no ${ var.image.username }@${ ip } -y"
     ]
     storage_retry_join          = "\"${join("\", \"", local.storage_servers_private)}\""
+    vault_recursors             = "\"${join("\", \"", var.dns_servers)}\""
     vault_servers_private       = [
         for key in keys(var.vault_zones):
         vsphere_virtual_machine.vault[key].default_ip_address
@@ -273,7 +274,7 @@ resource "null_resource" "install_storage" {
     provisioner "remote-exec" {
         inline                  = [
             "sudo chmod +x /root/tf_scripts/consul.sh",
-            "sudo /root/tf_scripts/consul.sh -a 'server' -d '${var.info.data_center}' -v '${var.info.consul_version}' -l '${var.info.consul_license}' -e '${var.info.consul_encrypt}' -b '{{ GetInterfaceIP \\\"ens192\\\" }}' -s ${length(var.storage_zones)} -r '${local.storage_retry_join}'",
+            "sudo /root/tf_scripts/consul.sh -a 'server' -d '${var.info.data_center}' -v '${var.info.consul_version}' -l '${var.info.consul_license}' -e '${var.info.consul_encrypt}' -b '{{ GetInterfaceIP \\\"ens192\\\" }}' -s ${length(var.storage_zones)} -r '${local.storage_retry_join}' -c '${local.vault_recursors}'",
             "sudo rm -r /root/tf_scripts/consul.sh",
         ]
     }
