@@ -20,7 +20,7 @@ path=$(which jq)
 echo "path is $path" 1>&2
 if [[ -z "$path" ]] ; then
    path="./jq"
-   echo $path 1>&2
+   echo "$path" 1>&2
    if [[ ! -f "$path" ]] ; then
        echo "Attempting to curl" 1>&2
        curl https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > $path 
@@ -29,7 +29,7 @@ if [[ -z "$path" ]] ; then
 fi
 
 echo "1st Eval" 1>&2
-eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')" 1>&2
+eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')"
 
 cert="${EXECUTION_PATH}/transit_cert"
 echo "${PRIVATE_KEY}" > $cert
