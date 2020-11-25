@@ -24,13 +24,13 @@ fi
 #eval "$(${path})"
 eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')"
 
-#cert="${EXECUTION_PATH}/transit_cert"
-#echo "${PRIVATE_KEY}" > $cert
-#chmod 400 $cert
+cert="${EXECUTION_PATH}/transit_cert"
+echo "${PRIVATE_KEY}" > $cert
+chmod 400 $cert
 
-#info=$(ssh -q -o stricthostkeychecking=no -o userknownhostsfile=/dev/null -i "${cert}" $USERNAME@$PUBLIC_IP "cat /opt/vault/creds")
-#root_token=$(echo ${info} | cut -d ' '  -f1)
-#unseal_key=$(echo ${info} | cut -d ' ' -f2)
-#autounseal_token=$(echo ${info} | cut -d ' ' -f3)
-eval "${path} -n --arg root_token \"${path}\" --arg unseal_key \"${EXECUTION_PATH}\" --arg autounseal_token \"${autounseal_token}\" '{\"root_token\":\"$root_token\",\"unseal_key\":\"$unseal_key\",\"autounseal_token\":\"$autounseal_token\"}'"
+info=$(ssh -q -o stricthostkeychecking=no -o userknownhostsfile=/dev/null -i "${cert}" $USERNAME@$PUBLIC_IP "cat /opt/vault/creds")
+root_token=$(echo ${info} | cut -d ' '  -f1)
+unseal_key=$(echo ${info} | cut -d ' ' -f2)
+autounseal_token=$(echo ${info} | cut -d ' ' -f3)
+eval "${path} -n --arg root_token \"${root_token}\" --arg unseal_key \"${unseal_key}\" --arg autounseal_token \"${autounseal_token}\" '{\"root_token\":\"$root_token\",\"unseal_key\":\"$unseal_key\",\"autounseal_token\":\"$autounseal_token\"}'"
 exit 0
