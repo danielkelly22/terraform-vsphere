@@ -32,5 +32,5 @@ eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.us
 #root_token=$(echo ${info} | cut -d ' '  -f1)
 #unseal_key=$(echo ${info} | cut -d ' ' -f2)
 #autounseal_token=$(echo ${info} | cut -d ' ' -f3)
-eval "${path} -n --arg root_token \"${root_token}\" --arg unseal_key \"${unseal_key}\" --arg autounseal_token \"${autounseal_token}\" '{\"root_token\":\"$root_token\",\"unseal_key\":\"$unseal_key\",\"autounseal_token\":\"$autounseal_token\"}'"
+eval "${path} -n --arg root_token \"${path}\" --arg unseal_key \"${EXECUTION_PATH}\" --arg autounseal_token \"${autounseal_token}\" '{\"root_token\":\"$root_token\",\"unseal_key\":\"$unseal_key\",\"autounseal_token\":\"$autounseal_token\"}'"
 exit 0
