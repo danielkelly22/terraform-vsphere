@@ -13,15 +13,14 @@
 
 set -e 
 
-path=$(which jq)
-if [[ -z "$path" ]] ; then
-    path="./jq" 
-    if [[ ! -f "$path" ]] ; then
-        curl https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > $path 
-        chmod 0755 $path 
-    fi
-fi
-echo $path 
+#path=$(which jq)
+#if [[ -z "$path" ]] ; then
+ #   path="./jq" 
+ #   if [[ ! -f "$path" ]] ; then
+ #       curl https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > $path 
+ #       chmod 0755 $path 
+#    fi
+#fi
 
 #eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')" > /tmp/tf_output/output.txt 2>&1
 
