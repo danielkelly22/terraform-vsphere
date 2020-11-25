@@ -13,14 +13,14 @@
 
 set -e
 
-path=$(which jq)
-if [[ -z "$path" ]] ; then
+#path=$(which jq)
+#if [[ -z "$path" ]] ; then
     path="./jq"
     if [[ ! -f "$path" ]] ; then
-        curl https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > $path
+        curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > $path
         chmod 0755 $path
     fi
-fi
+#fi
 
 eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) VAULT_IPS=\(.vault_ips) PRIVATE_KEY=\(.private_key)"')"
 
