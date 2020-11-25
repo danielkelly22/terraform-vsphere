@@ -13,7 +13,7 @@
 
 set -e
 
-#path=$(which jq)
+path=$(which jq)
 #if [[ -z "$path" ]] ; then
  # path="./jq"   
  #  if [[ ! -f "$path" ]] ; then     
@@ -22,7 +22,7 @@ set -e
  # fi
 #fi
 
-eval "$(jq -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')"
+eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')"
 
 #cert="${EXECUTION_PATH}/transit_cert"
 #echo "${PRIVATE_KEY}" > $cert
@@ -32,5 +32,5 @@ eval "$(jq -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.usernam
 #root_token=$(echo ${info} | cut -d ' '  -f1)
 #unseal_key=$(echo ${info} | cut -d ' ' -f2)
 #autounseal_token=$(echo ${info} | cut -d ' ' -f3)
-eval "jq -n --arg root_token \"${root_token}\" --arg unseal_key \"${unseal_key}\" --arg autounseal_token \"${autounseal_token}\" '{\"root_token\":\"$root_token\",\"unseal_key\":\"$unseal_key\",\"autounseal_token\":\"$autounseal_token\"}'"
+eval "${path} -n --arg root_token \"${root_token}\" --arg unseal_key \"${unseal_key}\" --arg autounseal_token \"${autounseal_token}\" '{\"root_token\":\"$root_token\",\"unseal_key\":\"$unseal_key\",\"autounseal_token\":\"$autounseal_token\"}'"
 exit 0
