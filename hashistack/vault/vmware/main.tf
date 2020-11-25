@@ -354,7 +354,8 @@ resource "vsphere_virtual_machine" "vault" {
         }
     }
 }
-          
+
+/*
 resource "null_resource" "install_vault" {
     for_each                    = vsphere_virtual_machine.vault
 
@@ -379,3 +380,4 @@ resource "null_resource" "install_vault" {
 
     depends_on                  = [vsphere_virtual_machine.transit, vsphere_virtual_machine.vault, null_resource.install_storage]
 }
+*/
