@@ -14,6 +14,7 @@
 echo "Testing" 1>&2
 set -e
 
+echo "Checking Path" 1>&2
 path=$(which jq)
 if [[ -z "$path" ]] ; then
    path="./jq" 
