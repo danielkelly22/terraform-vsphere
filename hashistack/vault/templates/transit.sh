@@ -11,7 +11,7 @@
 #
 ###############################################################################################
 
-set -e 
+set -e 1>&2
 
 path=$(which jq)
 if [[ -z "$path" ]] ; then
@@ -22,15 +22,15 @@ if [[ -z "$path" ]] ; then
    fi
 fi
 
-eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')"
+eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')" 1>&2
 
-cert="${EXECUTION_PATH}/transit_cert" > /tmp/output.txt 2>&1
-echo "${PRIVATE_KEY}" > $cert > /tmp/output.txt 2>&1
-chmod 400 $cert > /tmp/output.txt 2>&1
+cert="${EXECUTION_PATH}/transit_cert"  2>&1
+echo "${PRIVATE_KEY}" > $cert 2>&1
+chmod 400 $cert  2>&1
 
-info=$(ssh -q -o stricthostkeychecking=no -o userknownhostsfile=/dev/null -i "${cert}" $USERNAME@$PUBLIC_IP "cat /opt/vault/creds") > /tmp/tf_output/output.txt 2>&1
+info=$(ssh -q -o stricthostkeychecking=no -o userknownhostsfile=/dev/null -i "${cert}" $USERNAME@$PUBLIC_IP "cat /opt/vault/creds") 2>&1
 root_token=$(echo ${info} | cut -d ' '  -f1)
 unseal_key=$(echo ${info} | cut -d ' ' -f2)
 autounseal_token=$(echo ${info} | cut -d ' ' -f3)
-eval "${path} -n --arg root_token \"${root_token}\" --arg unseal_key \"${unseal_key}\" --arg autounseal_token \"${autounseal_token}\" '{\"root_token\":\"$root_token\",\"unseal_key\":\"$unseal_key\",\"autounseal_token\":\"$autounseal_token\"}'" > /tmp/tf_output/output.txt 2>&1
+eval "${path} -n --arg root_token \"${root_token}\" --arg unseal_key \"${unseal_key}\" --arg autounseal_token \"${autounseal_token}\" '{\"root_token\":\"$root_token\",\"unseal_key\":\"$unseal_key\",\"autounseal_token\":\"$autounseal_token\"}'"  2>&1
 exit 0
