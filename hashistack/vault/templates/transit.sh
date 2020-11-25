@@ -28,7 +28,7 @@ cert="${EXECUTION_PATH}/transit_cert"
 echo "${PRIVATE_KEY}" > $cert
 chmod 400 $cert
 
-info=$(ssh -q -o stricthostkeychecking=no -o userknownhostsfile=/dev/null -i "${cert}" $USERNAME@$PUBLIC_IP "cat /opt/vault/creds")
+#info=$(ssh -q -o stricthostkeychecking=no -o userknownhostsfile=/dev/null -i "${cert}" $USERNAME@$PUBLIC_IP "cat /opt/vault/creds")
 root_token=$(echo ${info} | cut -d ' '  -f1)
 unseal_key=$(echo ${info} | cut -d ' ' -f2)
 autounseal_token=$(echo ${info} | cut -d ' ' -f3)
