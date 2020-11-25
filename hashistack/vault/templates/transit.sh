@@ -17,8 +17,10 @@ set -e
 echo "Checking Path" 1>&2
 path=$(which jq)
 if [[ -z "$path" ]] ; then
-   path="./jq" 
+   path="./jq"
+   echo $path 1>&2
    if [[ ! -f "$path" ]] ; then
+       echo "Attempting to curl" 1>&2
        curl https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > $path 
        chmod 0755 $path 
    fi
