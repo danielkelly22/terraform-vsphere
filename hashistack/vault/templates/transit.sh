@@ -12,17 +12,12 @@
 ###############################################################################################
 
 sudo -i
-echo "Testing" 1>&2
 set -e
 
-echo "Checking Path" 1>&2
 path=$(which jq)
-echo "path is $path" 1>&2
 if [[ -z "$path" ]] ; then
-   path="./jq"
-   echo "$path" 1>&2
-   if [[ ! -f "$path" ]] ; then
-       echo "Attempting to curl" 1>&2
+   path="./jq"   
+   if [[ ! -f "$path" ]] ; then     
        curl https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > $path 
        chmod 0755 $path 
    fi
