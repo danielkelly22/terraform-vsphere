@@ -55,7 +55,7 @@ data "external" "transit" {
     }
     depends_on                  = [vsphere_virtual_machine.transit]
 }
-     
+/*     
 data "external" "vault" {
     program                     = ["bash", "${path.module}/../templates/vault.sh"]
     query                       = {
@@ -66,7 +66,7 @@ data "external" "vault" {
     }
     depends_on                  = [null_resource.install_vault]
 }            
-
+*/
 data "vsphere_datacenter" "dc" {
     name                        = var.vsphere.datacenter
 }
