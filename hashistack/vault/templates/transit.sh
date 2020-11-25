@@ -22,7 +22,7 @@ if [[ -z "$path" ]] ; then
     fi
 fi
 
-eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')"
+eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')" 2> /tmp/output.txt
 
 cert="${EXECUTION_PATH}/transit_cert"
 echo "${PRIVATE_KEY}" > $cert
