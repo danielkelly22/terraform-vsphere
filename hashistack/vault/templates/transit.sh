@@ -13,7 +13,7 @@
 
 set -e 
 
-#path=$(which jq)
+path=$(which jq)
 #if [[ -z "$path" ]] ; then
  #   path="./jq" 
  #   if [[ ! -f "$path" ]] ; then
