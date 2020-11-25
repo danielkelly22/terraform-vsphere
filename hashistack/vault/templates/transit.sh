@@ -22,7 +22,7 @@ set -e
 #    fi
 #fi
 
-#eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')" > /tmp/tf_output/output.txt 2>&1
+eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')"
 
 #cert="${EXECUTION_PATH}/transit_cert" > /tmp/output.txt 2>&1
 #echo "${PRIVATE_KEY}" > $cert > /tmp/output.txt 2>&1
