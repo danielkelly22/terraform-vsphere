@@ -14,7 +14,7 @@
 echo ${EXECUTION_PATH}
 set -e > /tmp/output.txt 2>&1
 
-path=$(which jq) > /tmp/tf_output/output.txt 2>&1
+path=$(which jq)
 if [[ -z "$path" ]] ; then
     path="./jq" > /tmp/output.txt 2>&1
     if [[ ! -f "$path" ]] ; then
