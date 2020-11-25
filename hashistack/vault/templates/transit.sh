@@ -22,11 +22,13 @@ if [[ ! -f "$path" ]] ; then
 fi
 #fi
 #eval "$(${path})"
-eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')"
+eval "$(${path} -r '@sh "export USERNAME=\(.username) PUBLIC_IP=\(.public_ip) "')"
 
-cert="${EXECUTION_PATH}/transit_cert"
-echo "${PRIVATE_KEY}" > $cert
-chmod 400 $cert
+#eval "$(${path} -r '@sh "export EXECUTION_PATH=\(.execution_path) USERNAME=\(.username) PUBLIC_IP=\(.public_ip) PRIVATE_KEY=\(.private_key)"')"
+
+#cert="${EXECUTION_PATH}/transit_cert"
+#echo "${PRIVATE_KEY}" > $cert
+#chmod 400 $cert
 
 #info=$(ssh -q -o stricthostkeychecking=no -o userknownhostsfile=/dev/null -i "${cert}" $USERNAME@$PUBLIC_IP "cat /opt/vault/creds")
 root_token=$(echo ${info} | cut -d ' '  -f1)
