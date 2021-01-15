@@ -181,7 +181,5 @@ resource "vsphere_virtual_machine" "vm3" {
 
 output "vsphere_private_ip" {
   value = vsphere_virtual_machine.vm.*.default_ip_address
-  value = vsphere_virtual_machine.vm2.*.default_ip_address
-  value = vsphere_virtual_machine.vm3.*.default_ip_address
 }
 
