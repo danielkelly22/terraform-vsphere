@@ -80,37 +80,108 @@ resource "vsphere_virtual_machine" "vm" {
 
 }
 
-# resource "null_resource" "vsphere_apache_setup" {
-#   count                    = var.vm_count
-#   triggers = {
-#     policy_sha1 = "${sha1(file("./files/install_apache.sh"))}"
-#   }
-#   provisioner "file" {
-#     source = "./files/install_apache.sh"
-#     destination = "/tmp/install_apache.sh"
+resource "vsphere_virtual_machine" "vm2" {
+  wait_for_guest_net_timeout = "15"
+  count                    = var.vm2_count
+  name                     = "${var.vm_name_2}${format("%02d", count.index+01)}"
+  resource_pool_id         = data.vsphere_resource_pool.pool.id
+  datastore_cluster_id     = data.vsphere_datastore_cluster.datastore.id 
+  folder                   = var.vsphere_vm_folder 
+  annotation		           = var.vm_annotation
+  guest_id                 = data.vsphere_virtual_machine.template.guest_id
+  scsi_type                = data.vsphere_virtual_machine.template.scsi_type
+  num_cpus                 = 4
+  memory                   = 16384
+  network_interface {
+            network_id    = data.vsphere_network.network.id
+            #adapter_type  = data.vsphere_virtual_machine.template.network_interface_type[0]
+  }
+  disk {      
+    label            = "${var.vm_name_2}${format("%02d", count.index+01)}_disk01.vmdk"
+    size             = data.vsphere_virtual_machine.template.disks.0.size    
+    thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
+  }
+  disk {      
+    label 	         = "${var.vm_name_2}${format("%02d", count.index+01)}_disk02.vmdk"
+    size             = "400"   
+    unit_number      = 1
+    thin_provisioned = true
+  }
+  
+  clone {
+      template_uuid = data.vsphere_virtual_machine.template.id
+      timeout = "600"
+      customize {
+        linux_options {
+          host_name = "${var.vm_name_2}${format("%02d", count.index+01)}"
+          domain = "amtrustservices.com"
+        }
+        network_interface {
+            ipv4_address = var.vm2_ipv4_addr
+            ipv4_netmask = var.vm2_ipv4_netmask
+        }
+        ipv4_gateway = var.vm_ipv4_gateway
+        dns_server_list = var.virtual_machine_dns_servers
+        dns_suffix_list = ["amtrustservices.com", "serv.infr.it.amtrustna.com"]
+        timeout = "600"       
+      }
+  }          
 
-#     connection {
-#     host     = vsphere_virtual_machine.vm_01[count.index].default_ip_address
-#     type     = "ssh"
-#     user     = var.vsphere_linux_username
-#     timeout  = "10m"
-#     password = var.vsphere_linux_password
-#     }       
-#   }
-#   provisioner "remote-exec" {
-#     script = "./files/install_apache.sh"
-#     connection {
-#     host        = vsphere_virtual_machine.vm_01[count.index].default_ip_address
-#     user        = var.vsphere_linux_username
-#     type        = "ssh"
-#     timeout     = "10m"
-#     password    = var.vsphere_linux_password
-#     script_path = "/root/install_apache.sh"
-#     } 
-#   }
-# }
+}
+
+resource "vsphere_virtual_machine" "vm3" {
+  wait_for_guest_net_timeout = "15"
+  count                    = var.vm3_count
+  name                     = "${var.vm_name_3}${format("%02d", count.index+01)}"
+  resource_pool_id         = data.vsphere_resource_pool.pool.id
+  datastore_cluster_id     = data.vsphere_datastore_cluster.datastore.id 
+  folder                   = var.vsphere_vm_folder 
+  annotation		           = var.vm_annotation
+  guest_id                 = data.vsphere_virtual_machine.template.guest_id
+  scsi_type                = data.vsphere_virtual_machine.template.scsi_type
+  num_cpus                 = 4
+  memory                   = 16384
+  network_interface {
+            network_id    = data.vsphere_network.network.id
+            #adapter_type  = data.vsphere_virtual_machine.template.network_interface_type[0]
+  }
+  disk {      
+    label            = "${var.vm_name_3}${format("%02d", count.index+01)}_disk01.vmdk"
+    size             = data.vsphere_virtual_machine.template.disks.0.size    
+    thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
+  }
+  disk {      
+    label 	         = "${var.vm_name_3}${format("%02d", count.index+01)}_disk02.vmdk"
+    size             = "400"   
+    unit_number      = 1
+    thin_provisioned = true
+  }
+  
+  clone {
+      template_uuid = data.vsphere_virtual_machine.template.id
+      timeout = "600"
+      customize {
+        linux_options {
+          host_name = "${var.vm_name_3}${format("%02d", count.index+01)}"
+          domain = "amtrustservices.com"
+        }
+        network_interface {
+            ipv4_address = var.vm3_ipv4_addr
+            ipv4_netmask = var.vm3_ipv4_netmask
+        }
+        ipv4_gateway = var.vm_ipv4_gateway
+        dns_server_list = var.virtual_machine_dns_servers
+        dns_suffix_list = ["amtrustservices.com", "serv.infr.it.amtrustna.com"]
+        timeout = "600"       
+      }
+  }          
+
+}
+
 
 output "vsphere_private_ip" {
   value = vsphere_virtual_machine.vm.*.default_ip_address
+  value = vsphere_virtual_machine.vm2.*.default_ip_address
+  value = vsphere_virtual_machine.vm3.*.default_ip_address
 }
 

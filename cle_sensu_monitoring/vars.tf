@@ -32,6 +32,31 @@ variable "vm_name" {
   description = "Name for the VM(s)"
   default = "cledsensu"
 }
+variable "vm_name_2" {
+  description = "Name for the VM(s)"
+  default = "cledgraf"
+}
+variable "vm_name_3" {
+  description = "Name for the VM(s)"
+  default = "cledinfdbsensu"
+}
+variable "vm2_ipv4_addr" {
+  description = "Name for the VM(s)"
+  default = "10.10.225.175"
+}
+variable "vm2_ipv4_netmask" {
+  description = "Name for the VM(s)"
+  default = "24"
+}
+variable "vm3_ipv4_addr" {
+  description = "Name for the VM(s)"
+  default = "10.10.225.180"
+}
+variable "vm3_ipv4_netmask" {
+  description = "Name for the VM(s)"
+  default = "24"
+}
+
 
 variable "vm_annotation" {
   description = "Annotation to add to the VM(s)"
@@ -42,4 +67,11 @@ variable "vm_count" {
   description = "Number of VMs to build"
   default = "1"
 }
-
+variable "vm2_count" {
+  description = "Number of VMs to build"
+  default = "1"
+}
+variable "vm3_count" {
+  description = "Number of VMs to build"
+  default = "1"
+}
