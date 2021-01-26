@@ -38,7 +38,7 @@ variable "vm_name_2" {
 }
 variable "vm_name_3" {
   description = "Name for the VM(s)"
-  default = "cledinfdbsensu"
+  default = "cledprom01"
 }
 variable "vm2_ipv4_addr" {
   description = "Name for the VM(s)"
