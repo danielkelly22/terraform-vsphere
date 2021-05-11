@@ -102,69 +102,6 @@ resource "vsphere_virtual_machine" "vm_01" {
 }
 
 
-resource "null_resource" "vsphere_html" {
-  count                    = var.vm_count
-  triggers = {
-    policy_sha1 = "${sha1(file("./files/index.html"))}"
-  }
-  provisioner "file" {
-    source = "./files/index.html"
-    destination = "C:\\Project\\index.html"
-
-    connection {
-    host     = "${vsphere_virtual_machine.vm_01[count.index].default_ip_address}"
-    type     = "winrm"
-    port     = 5985
-    https    = false
-    timeout  = "10m"
-    user     = var.windows_username
-    password = var.windows_password
-    }       
-  }
-}
-
-resource "null_resource" "vsphere_background" {
-  count                    = var.vm_count
-  triggers = {
-    policy_sha1 = "${sha1(file("./files/index.html"))}"
-  }
-  provisioner "file" {
-    source = "./files/AmTrust.png"
-    destination = "C:\\Project\\background.png"
-
-    connection {
-    host     = "${vsphere_virtual_machine.vm_01[count.index].default_ip_address}"
-    type     = "winrm"
-    port     = 5985
-    https    = false
-    timeout  = "10m"
-    user     = var.windows_username
-    password = var.windows_password
-    }       
-  } 
-}
-
-resource "null_resource" "vsphere_favicon" {
-  count                    = var.vm_count
-  triggers = {
-    policy_sha1 = "${sha1(file("./files/index.html"))}"
-  }
-  provisioner "file" {
-    source = "./files/vsphere_favicon.ico"
-    destination = "C:/Project/favicon.ico"
-
-    connection {
-    host     = "${vsphere_virtual_machine.vm_01[count.index].default_ip_address}"
-    type     = "winrm"
-    port     = 5985
-    https    = false
-    timeout  = "10m"
-    user     = var.windows_username
-    password = var.windows_password
-    }       
-  }
-}
-
 output "vsphere_private_ip" {
   value = vsphere_virtual_machine.vm_01.*.default_ip_address
 }
