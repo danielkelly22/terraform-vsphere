@@ -41,12 +41,12 @@ variable "vsphere_vm_folder" {
 
 variable "vm_name_01" {
   description = "Name for the VM(s)"
-  default = "cledwebdemo"
+  default = "newvm"
 }
 
 variable "vm_annotation" {
   description = "Annotation to add to the VM(s)"
-  default = "Contact: Daniel Kelly \n Description: pTFE Demo  \n Ticket: SCREQXXXXXX \n Created By: built via Ansible/Terraform \n Created On: 8/10/2020"
+  default = "Contact: Nigel Tatschner \n Description: New Server Build  \n Ticket: UPDATEME \n Created By: built via Terraform \n Created On: UPDATEME"
 }
 
 variable "vsphere_datacenter" {
