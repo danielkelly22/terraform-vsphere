@@ -63,8 +63,8 @@ resource "vsphere_virtual_machine" "vm" {
 //  annotation		       = var.vm_annotation_1
   guest_id                 = data.vsphere_virtual_machine.vm_template.guest_id
   scsi_type                = data.vsphere_virtual_machine.vm_template.scsi_type
-  num_cpus                 = 4
-  memory                   = 16384
+  num_cpus                 = 8
+  memory                   = 24576
   network_interface {
     network_id    = data.vsphere_network.network.id
   }
