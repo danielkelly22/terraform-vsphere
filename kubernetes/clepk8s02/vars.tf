@@ -4,7 +4,7 @@
 #
 variable "vm_name_prefix" {
   type=string
-  default="clepk8s01"
+  default="clepk8s02"
 }
 variable "vsphere_template_name" {
   type=string
